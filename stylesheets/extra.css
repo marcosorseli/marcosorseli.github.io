@@ -1,0 +1,50 @@
+html {
+  scroll-behavior: smooth;
+}
+
+/* Override the slate (dark) theme with Gruvbox Dark */
+[data-md-color-scheme="slate"] {
+  /* Backgrounds */
+  --md-default-bg-color: #282828;
+  --md-default-bg-color--light: #3c3836;
+  --md-default-bg-color--lighter: #504945;
+  --md-default-bg-color--lightest: #665c54;
+  
+  /* Text */
+  --md-default-fg-color: #ebdbb2;
+  --md-default-fg-color--light: #d5c4a1;
+  --md-default-fg-color--lighter: #bdae93;
+  --md-default-fg-color--lightest: #a89984;
+  
+  /* Primary and Accent colors */
+  --md-primary-fg-color: #689d6a; /* Gruvbox Orange for headers/UI */
+  --md-primary-bg-color: #282828;
+  --md-accent-fg-color: #fabd2f;  /* Gruvbox Yellow for accents */
+  --md-accent-bg-color: #282828;
+  
+  /* Typography */
+  --md-typeset-color: #ebdbb2;
+  --md-typeset-a-color: #83a598;  /* Gruvbox Blue for links */
+  
+  /* Code Blocks */
+  --md-code-bg-color: #1d2021;    /* Slightly darker for code blocks */
+  --md-code-fg-color: #ebdbb2;
+}
+
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/iosevka/400.css');
+
+.md-typeset {
+  font-family: "Iosevka", monospace !important;
+  font-weight: 200; /* Pode mudar para 300 se quiser linhas ainda mais finas */
+}
+
+/* Change section title colors */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+  color: #d65d7a; /* Swap to #b8bb26 for Green, or #d3869b for Purple */
+  font-weight: 500; /* Optional: Makes the sharp Iosevka headers pop */
+}
