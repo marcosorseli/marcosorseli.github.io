@@ -5,14 +5,18 @@ html {
 /* Override the slate (dark) theme with Gruvbox Dark */
 [data-md-color-scheme="slate"] {
   /* Backgrounds */
-  --md-default-bg-color: #282828;
+  /* --md-default-bg-color: #282828;
   --md-default-bg-color--light: #3c3836;
   --md-default-bg-color--lighter: #504945;
-  --md-default-bg-color--lightest: #665c54;
+  --md-default-bg-color--lightest: #665c54; */
+  /* Backgrounds - Gruvbox Hard */
+  --md-default-bg-color: #1d2021;          /* Much darker base */
+  --md-default-bg-color--light: #282828;   
+  --md-default-bg-color--lighter: #3c3836;
   
   /* Text */
-  --md-default-fg-color: #ebdbb2;
-  --md-default-fg-color--light: #d5c4a1;
+  --md-default-fg-color: #fbf1c7;
+  --md-default-fg-color--light: #ebdbb2;
   --md-default-fg-color--lighter: #bdae93;
   --md-default-fg-color--lightest: #a89984;
   
@@ -23,20 +27,19 @@ html {
   --md-accent-bg-color: #282828;
   
   /* Typography */
-  --md-typeset-color: #ebdbb2;
+  --md-typeset-color: #fbf1c7;
   --md-typeset-a-color: #83a598;  /* Gruvbox Blue for links */
   
-  /* Code Blocks */
-  --md-code-bg-color: #1d2021;    /* Slightly darker for code blocks */
-  --md-code-fg-color: #ebdbb2;
+/* Make code blocks even darker so they stand out from the page */
+  --md-code-bg-color: #141617;
 }
 
 @import url('https://cdn.jsdelivr.net/npm/@fontsource/iosevka/400.css');
 
-.md-typeset {
+/* .md-typeset {
   font-family: "Iosevka", monospace !important;
-  font-weight: 200; /* Pode mudar para 300 se quiser linhas ainda mais finas */
-}
+  font-weight: 10; 
+} */
 
 /* Change section title colors */
 .md-typeset h1,
@@ -47,4 +50,15 @@ html {
 .md-typeset h6 {
   color: #d65d7a; /* Swap to #b8bb26 for Green, or #d3869b for Purple */
   font-weight: 500; /* Optional: Makes the sharp Iosevka headers pop */
+}
+
+/* Make math formulas pop with a crisp white */
+.md-typeset .arithmatex {
+    color: #eadcb9; 
+}
+
+/* Force crisp font rendering on dark backgrounds */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }

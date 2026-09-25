@@ -42,8 +42,8 @@
         
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Jetbrains+Mono:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Jetbrains Mono";--md-code-font:"Fira Code"}</style>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"Fira Code"}</style>
       
     
     
@@ -582,8 +582,8 @@ By adding the correction term, coming from the second order Taylor expansion, we
 <div class="arithmatex">\[df = \frac{\partial f}{\partial t} dt + \frac{\partial f}{\partial x} dx_t + \frac{1}{2} \frac{\partial^2 f}{\partial x^2} (dx_t)^2\]</div>
 <p>Because we know that <span class="arithmatex">\((dW_t)^2 = dt\)</span>, we can substitute <span class="arithmatex">\((dx_t)^2 = \sigma(x,t)^2 dt\)</span> directly into the equation. Grouping the deterministic <span class="arithmatex">\(dt\)</span> terms and the random <span class="arithmatex">\(dW_t\)</span> terms together gives us:</p>
 <div class="arithmatex">\[df = \left( \frac{\partial f}{\partial t} + \mu(x,t) \frac{\partial f}{\partial x} + \frac{1}{2} \sigma(x,t)^2 \frac{\partial^2 f}{\partial x^2} \right) dt + \sigma(x,t) \frac{\partial f}{\partial x} dW_t\]</div>
-<p>A very common and useful special case occurs when our underlying process is simply standard Brownian motion itself. If we apply Itô's Lemma to a function <span class="arithmatex">\(f(t, W_t)\)</span>, we have <span class="arithmatex">\(\mu=0\)</span> and <span class="arithmatex">\(\sigma=1\)</span>. The equation reduces to:
-$<span class="arithmatex">\(df(t, W_t) = \left( \frac{\partial f}{\partial t} + \frac{1}{2} \frac{\partial^2 f}{\partial W^2} \right) dt + \frac{\partial f}{\partial W} dW_t\)</span>$</p>
+<p>A very common and useful special case occurs when our underlying process is simply standard Brownian motion itself. If we apply Itô's Lemma to a function <span class="arithmatex">\(f(t, W_t)\)</span>, we have <span class="arithmatex">\(\mu=0\)</span> and <span class="arithmatex">\(\sigma=1\)</span>. The equation reduces to:</p>
+<div class="arithmatex">\[df(t, W_t) = \left( \frac{\partial f}{\partial t} + \frac{1}{2} \frac{\partial^2 f}{\partial W^2} \right) dt + \frac{\partial f}{\partial W} dW_t\]</div>
 <p>We can use Itô's Lemma to actually solve Stochastic Differential Equations. Let's look at two examples.</p>
 <h3 id="example-1-integrating-brownian-motion">Example 1: Integrating Brownian Motion</h3>
 <p>Suppose we want to find the integral <span class="arithmatex">\(\int_0^t W_s dW_s\)</span>. Classical calculus tells us <span class="arithmatex">\(\int x dx = \frac{1}{2}x^2\)</span>. Let's see what happens in stochastic calculus.</p>
