@@ -404,15 +404,46 @@
 <h1 id="making-sense-of-itos-lemma">Making sense of Itô's Lemma</h1>
 <p>My goal for this post is to build an intuitive feel for Stochastic Differential Equations (SDEs) and solve a few examples, both on paper and with code. I am going to skip the heavy measure theory and focus strictly on the computational mechanics. Down the line, I plan to look at fun results like Kakutani’s theorem, which bridges random walks to PDEs. But first, we need to see exactly why classical calculus breaks down when we introduce noise and how Itô's Lemma fixes it.</p>
 <h2 id="brownian-motion">Brownian Motion</h2>
-<p>The main ingredient we need, before talking about SDEs or Itô's Lemma, is Brownian motion. It will be responsible for the noise (or the word stochastic) in SDEs. Brownian motion arises when we take infinitely many small steps in a random walk. More precisely, suppose you are stepping up or down according to the result of a coin flip. The resulting path you take is what we call a random walk.</p>
+<p>The main ingredient we need, before talking about SDEs or Itô's Lemma, is Brownian motion. It will be responsible for the noise (or the word stochastic) in SDEs. Brownian motion arises when we take infinitely many small steps in a random walk. More precisely, suppose you are stepping up or down according to the result of a fair coin flip. At each step <span class="arithmatex">\(k\)</span>, let the step direction be:</p>
+<div class="arithmatex">\[
+\xi_k = \begin{cases} 
++1, &amp; \text{with probability } 1/2 \\
+ -1, &amp; \text{with probability } 1/2 
+\end{cases}
+\]</div>
+<p>Each step has zero mean and unit variance:</p>
+<div class="arithmatex">\[\mathbb{E}[\xi_k] = (+1)\frac{1}{2} + (-1)\frac{1}{2} = 0\]</div>
+<div class="arithmatex">\[\text{Var}(\xi_k) = \mathbb{E}[\xi_k^2] - (\mathbb{E}[\xi_k])^2 = 1 - 0 = 1\]</div>
+<p>After <span class="arithmatex">\(N\)</span> steps of size <span class="arithmatex">\(\Delta x\)</span>, your position is:</p>
+<div class="arithmatex">\[X_N = \Delta x \sum_{k=1}^N \xi_k\]</div>
+<p>Let's look at the basic statistics of this position:</p>
+<p>Expected position:</p>
+<div class="arithmatex">\[\mathbb{E}[X_N] = \Delta x \sum_{k=1}^N \mathbb{E}[\xi_k] = 0\]</div>
+<p>Because each coin flip is independent, the variance becomes:</p>
+<div class="arithmatex">\[\text{Var}(X_N) = (\Delta x)^2 \sum_{k=1}^N \text{Var}(\xi_k) = N (\Delta x)^2\]</div>
+<p>This gives an average distance from the origin (standard deviation) of <span class="arithmatex">\(\Delta x \sqrt{N}\)</span>.</p>
 <!-- PICTURE 1: Discrete Random Walk -->
 <div style="background: #282828; padding: 25px; border-radius: 8px; border: 1px solid #3c3836; margin: 2rem 0;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; color: #ebdbb2; font-family: monospace; font-size: 0.9rem;">
+    <span style="font-weight: bold;">A Simple Random Walk</span>
+  </div>
   <div style="width: 100%; height: 250px;">
     <canvas id="randomWalkCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
   </div>
 </div>
 
-<p>Now let us imagine that instead of taking one step of length 1 per second, we take four steps of length <span class="arithmatex">\(\frac{1}{2}\)</span> per second. We can go further and imagine taking a hundred steps of length <span class="arithmatex">\(\frac{1}{10}\)</span> per second. Notice that the step size shrinks by the square root of the number of steps. If we keep subdividing the intervals like this, driving the time between steps to zero, the resulting continuous path is what we call Brownian motion.</p>
+<p>Now suppose that we want the number of steps in our random walk to go to infinity. More precisely, suppose we have a random walk that takes <span class="arithmatex">\(N\)</span> steps in a second, one every <span class="arithmatex">\(\Delta t = 1/N\)</span> seconds. What happens if we send <span class="arithmatex">\(N\)</span> to infinity?</p>
+<p>Notice that if we keep the length of our steps fixed at <span class="arithmatex">\(1\)</span>, the path would blow up completely. Taking infinitely many steps of length <span class="arithmatex">\(1\)</span> would send the walker infinitely far away. To obtain a continuous limit path, the step size <span class="arithmatex">\(\Delta x\)</span> must shrink as <span class="arithmatex">\(N\)</span> grows.</p>
+<p>Now the question is, how fast must <span class="arithmatex">\(\Delta x\)</span> shrink? To answer that, let's look at the variance formula <span class="arithmatex">\(\text{Var}(X_N) = N (\Delta x)^2\)</span>.</p>
+<p>If we shrink steps linearly with time (<span class="arithmatex">\(\Delta x \sim \Delta t = 1/N\)</span>), the variance becomes:</p>
+<div class="arithmatex">\[\text{Var}(X_N) = N \cdot \left(\frac{1}{N}\right)^2 = \frac{1}{N} \xrightarrow{N \to \infty} 0\]</div>
+<p>The random walk collapses into a flat line at zero.</p>
+<p>If we keep the steps fixed (e.g., <span class="arithmatex">\(\Delta x = 1\)</span>):</p>
+<div class="arithmatex">\[\text{Var}(X_N) = N \cdot 1 \xrightarrow{N \to \infty} \infty\]</div>
+<p>The variance goes to infinity, breaking the path, as we discussed before.</p>
+<p>The balance point must be somewhere in between. To keep the variance finite and non-zero after one second (say, <span class="arithmatex">\(\text{Var}(X_N) = 1\)</span>), we must have:</p>
+<div class="arithmatex">\[N (\Delta x)^2 = 1 \implies \Delta x = \frac{1}{\sqrt{N}} = \sqrt{\Delta t}\]</div>
+<p>Brownian motion arises from a process just like this. We take a random walk and make the steps more and more frequent. Taking into account our last discussion, to have a continuous limiting path that neither flattens to zero nor blows up, we need the step size to scale as <span class="arithmatex">\(\sqrt{\Delta t}\)</span>. As we send the time between steps to zero (<span class="arithmatex">\(\Delta t \to 0\)</span>), we obtain a fractal-like continuous path.</p>
 <div class="interactive-plot" style="background: #282828; padding: 25px; border-radius: 8px; border: 1px solid #3c3836; margin: 2rem 0; font-family: 'Iosevka', monospace; color: #ebdbb2;">
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
     <span style="font-weight: 500; font-size: 1.1em;">From random walk to Brownian motion</span>
@@ -429,15 +460,14 @@
 <!-- Load the logic from outside -->
 <script src="../javascripts/brownian-slider.js"></script>
 
-<p>As you can see in the image the resulting path, when we drag the button all the way to the right, is a jagged, fractal-like, line. Of course, this is just an intuitive view of what Brownian motion is, a precise mathematical definition is: </p>
-<p>A continuous-time stochastic process <span class="arithmatex">\(W_t\)</span> is a standard Brownian motion if it satisfies four rules:</p>
+<p>As you can see in the image, the resulting path when we drag the button all the way to the right, is a jagged, fractal-like, line. While Brownian motion (which we denote by <span class="arithmatex">\(W_t\)</span>) can be obtained via this limiting process, it is also characterised by the following properties:</p>
 <ol>
 <li><strong>Starts at zero:</strong> <span class="arithmatex">\(W_0 = 0\)</span>.</li>
 <li><strong>Continuous paths:</strong> The function <span class="arithmatex">\(t \mapsto W_t\)</span> is continuous everywhere.</li>
 <li><strong>Independent increments:</strong> For any time steps <span class="arithmatex">\(0 \le t_1 &lt; t_2 &lt; \dots &lt; t_n\)</span>, the increments <span class="arithmatex">\(W_{t_2} - W_{t_1}, W_{t_3} - W_{t_2}, \dots\)</span> are completely independent. Where it goes next doesn't depend on how it got there.</li>
 <li><strong>Gaussian steps:</strong> The change over any time interval <span class="arithmatex">\([s, t]\)</span> is normally distributed with mean 0 and variance <span class="arithmatex">\(t-s\)</span>. That is, <span class="arithmatex">\(W_t - W_s \sim \mathcal{N}(0, t-s)\)</span>.</li>
 </ol>
-<p>The proof that there is a stochastic process satisfying these properties is out of the scope of this post.</p>
+<p>Proving that such an object actually exists is a bit tricky, so we will take its existence for granted.</p>
 <p>Note that it follows straight from the definitions that <span class="arithmatex">\(E[W_t]=0\)</span> and <span class="arithmatex">\(Var(W_t)=t\)</span> for all <span class="arithmatex">\(t\)</span> (since <span class="arithmatex">\(W_t \sim \mathcal{N}(0, t)\)</span>).</p>
 <h2 id="calculus-for-noisy-paths">Calculus for Noisy Paths</h2>
 <p>In calculus, to understand the behaviour of a function we have the tools of differentiation and integration. We would like to have something similar for functions involving noise, which for us means involving Brownian motion. Before we add noise, let's remember how classical calculus works. Suppose we have a simple, linear Ordinary Differential Equation (ODE):</p>
@@ -611,7 +641,7 @@ By adding the correction term, coming from the second order Taylor expansion, we
 <!-- PICTURE 2: Ornstein-Uhlenbeck vs Brownian Motion -->
 <div style="background: #282828; padding: 25px; border-radius: 8px; border: 1px solid #3c3836; margin: 2rem 0;">
   <div style="margin-bottom: 15px; font-family: 'Iosevka', monospace; color: #ebdbb2;">
-    <span style="font-weight: 500; font-size: 1.1em;">Mean Reversion (Ornstein-Uhlenbeck)</span><br>
+    <span style="font-weight: 500; font-size: 1.1em;">Ornstein-Uhlenbeck</span><br>
     <span style="font-size: 0.9em; color: #a89984;">Gray: Standard Brownian Motion (wanders) | <span style="color: #d65d0e;">Orange: OU Process (stays close to center)</span></span>
   </div>
   <div style="width: 100%; height: 300px;">
