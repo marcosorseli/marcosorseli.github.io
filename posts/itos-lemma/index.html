@@ -1,0 +1,839 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Marcos Orseli">
+      
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Making sense of Itô's Lemma - Marcos Orseli | Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#making-sense-of-itos-lemma" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Marcos Orseli | Notes" class="md-header__button md-logo" aria-label="Marcos Orseli | Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Marcos Orseli | Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Making sense of Itô's Lemma
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Marcos Orseli | Notes" class="md-nav__button md-logo" aria-label="Marcos Orseli | Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Marcos Orseli | Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Making sense of Itô's Lemma
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Making sense of Itô's Lemma
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#brownian-motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Brownian Motion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculus-for-noisy-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calculus for Noisy Paths
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Calculus for Noisy Paths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-problem-with-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem with Noise
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-missing-term" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Missing Term
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#itos-lemma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Itô's Lemma
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Itô&#39;s Lemma">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-1-integrating-brownian-motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 1: Integrating Brownian Motion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-2-the-ornstein-uhlenbeck-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 2: The Ornstein-Uhlenbeck Process
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-3-the-brownian-bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 3: The Brownian Bridge
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-final-remark-the-integral-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Final Remark: The Integral Problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="making-sense-of-itos-lemma">Making sense of Itô's Lemma</h1>
+<p>My goal for this post is to build an intuitive feel for Stochastic Differential Equations (SDEs) and solve a few examples, both on paper and with code. I am going to skip the heavy measure theory and focus strictly on the computational mechanics. Down the line, I plan to look at fun results like Kakutani’s theorem, which bridges random walks to PDEs. But first, we need to see exactly why classical calculus breaks down when we introduce noise and how Itô's Lemma fixes it.</p>
+<h2 id="brownian-motion">Brownian Motion</h2>
+<p>The main ingredient we need, before talking about SDEs or Itô's Lemma, is Brownian motion. It will be responsible for the noise (or the word stochastic) in SDEs. Brownian motion arises when we take infinitely many small steps in a random walk. More precisely, suppose you are stepping up or down according to the result of a fair coin flip. At each step <span class="arithmatex">\(k\)</span>, let the step direction be:</p>
+<div class="arithmatex">\[
+\xi_k = \begin{cases} 
++1, &amp; \text{with probability } 1/2 \\
+ -1, &amp; \text{with probability } 1/2 
+\end{cases}
+\]</div>
+<p>Each step has zero mean and unit variance:</p>
+<div class="arithmatex">\[\mathbb{E}[\xi_k] = (+1)\frac{1}{2} + (-1)\frac{1}{2} = 0\]</div>
+<div class="arithmatex">\[\text{Var}(\xi_k) = \mathbb{E}[\xi_k^2] - (\mathbb{E}[\xi_k])^2 = 1 - 0 = 1\]</div>
+<p>After <span class="arithmatex">\(N\)</span> steps of size <span class="arithmatex">\(\Delta x\)</span>, your position is:</p>
+<div class="arithmatex">\[X_N = \Delta x \sum_{k=1}^N \xi_k\]</div>
+<p>Let's look at the basic statistics of this position:</p>
+<p>Expected position:</p>
+<div class="arithmatex">\[\mathbb{E}[X_N] = \Delta x \sum_{k=1}^N \mathbb{E}[\xi_k] = 0\]</div>
+<p>Because each coin flip is independent, the variance becomes:</p>
+<div class="arithmatex">\[\text{Var}(X_N) = (\Delta x)^2 \sum_{k=1}^N \text{Var}(\xi_k) = N (\Delta x)^2\]</div>
+<p>This gives an average distance from the origin (standard deviation) of <span class="arithmatex">\(\Delta x \sqrt{N}\)</span>.</p>
+<!-- PICTURE 1: Discrete Random Walk -->
+<div style="background: #282828; padding: 25px; border-radius: 8px; border: 1px solid #3c3836; margin: 2rem 0;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; color: #ebdbb2; font-family: monospace; font-size: 0.9rem;">
+    <span style="font-weight: bold;">A Random Walk</span>
+  </div>
+  <div style="width: 100%; height: 250px;">
+    <canvas id="randomWalkCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
+  </div>
+</div>
+
+<p>Now suppose that we want the number of steps in our random walk to go to infinity. More precisely, suppose we have a random walk that takes <span class="arithmatex">\(N\)</span> steps in a second, one every <span class="arithmatex">\(\Delta t = 1/N\)</span> seconds. What happens if we send <span class="arithmatex">\(N\)</span> to infinity?</p>
+<p>Notice that if we keep the length of our steps fixed at <span class="arithmatex">\(1\)</span>, the path would blow up completely. Taking infinitely many steps of length <span class="arithmatex">\(1\)</span> would send the walker infinitely far away. To obtain a continuous limit path, the step size <span class="arithmatex">\(\Delta x\)</span> must shrink as <span class="arithmatex">\(N\)</span> grows.</p>
+<p>Now the question is, how fast must <span class="arithmatex">\(\Delta x\)</span> shrink? To answer that, let's look at the variance formula <span class="arithmatex">\(\text{Var}(X_N) = N (\Delta x)^2\)</span>.</p>
+<p>If we shrink steps linearly with time (<span class="arithmatex">\(\Delta x \sim \Delta t = 1/N\)</span>), the variance becomes:</p>
+<div class="arithmatex">\[\text{Var}(X_N) = N \cdot \left(\frac{1}{N}\right)^2 = \frac{1}{N} \xrightarrow{N \to \infty} 0\]</div>
+<p>The random walk collapses into a flat line at zero.</p>
+<p>If we keep the steps fixed (e.g., <span class="arithmatex">\(\Delta x = 1\)</span>):</p>
+<div class="arithmatex">\[\text{Var}(X_N) = N \cdot 1 \xrightarrow{N \to \infty} \infty\]</div>
+<p>The variance goes to infinity, breaking the path, as we discussed before.</p>
+<p>The balance point must be somewhere in between. To keep the variance finite and non-zero after one second (say, <span class="arithmatex">\(\text{Var}(X_N) = 1\)</span>), we must have:</p>
+<div class="arithmatex">\[N (\Delta x)^2 = 1 \implies \Delta x = \frac{1}{\sqrt{N}} = \sqrt{\Delta t}\]</div>
+<p>Brownian motion arises from a process just like this. We take a random walk and make the steps more and more frequent. Taking into account our last discussion, to have a continuous limiting path that neither flattens to zero nor blows up, we need the step size to scale as <span class="arithmatex">\(\sqrt{\Delta t}\)</span>. As we send the time between steps to zero (<span class="arithmatex">\(\Delta t \to 0\)</span>), we obtain a fractal-like continuous path.</p>
+<div class="interactive-plot" style="background: #282828; padding: 25px; border-radius: 8px; border: 1px solid #3c3836; margin: 2rem 0; font-family: 'Iosevka', monospace; color: #ebdbb2;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <span style="font-weight: 500; font-size: 1.1em;">From random walk to Brownian motion</span>
+    <span>Steps: <span id="stepCount" style="color: #83a598; font-weight: bold; font-size: 1.2em;">10</span></span>
+  </div>
+
+  <input type="range" id="stepSlider" min="1" max="10" value="2" style="width: 100%; cursor: pointer; accent-color: #d65d0e;">
+
+  <div style="width: 100%; height: 350px; margin-top: 20px;">
+    <canvas id="brownianCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
+  </div>
+</div>
+
+<!-- Load the logic from outside -->
+<script src="../javascripts/brownian-slider.js"></script>
+
+<p>As you can see in the image, the resulting path when we drag the button all the way to the right, is a jagged, fractal-like, line. While Brownian motion (which we denote by <span class="arithmatex">\(W_t\)</span>) can be obtained via this limiting process, it is also characterised by the following properties:</p>
+<ol>
+<li><strong>Starts at zero:</strong> <span class="arithmatex">\(W_0 = 0\)</span>.</li>
+<li><strong>Continuous paths:</strong> The function <span class="arithmatex">\(t \mapsto W_t\)</span> is continuous everywhere.</li>
+<li><strong>Independent increments:</strong> For any time steps <span class="arithmatex">\(0 \le t_1 &lt; t_2 &lt; \dots &lt; t_n\)</span>, the increments <span class="arithmatex">\(W_{t_2} - W_{t_1}, W_{t_3} - W_{t_2}, \dots\)</span> are completely independent. Where it goes next doesn't depend on how it got there.</li>
+<li><strong>Gaussian steps:</strong> The change over any time interval <span class="arithmatex">\([s, t]\)</span> is normally distributed with mean 0 and variance <span class="arithmatex">\(t-s\)</span>. That is, <span class="arithmatex">\(W_t - W_s \sim \mathcal{N}(0, t-s)\)</span>.</li>
+</ol>
+<p>Proving that such an object actually exists is a bit tricky, so we will take its existence for granted.</p>
+<p>Note that it follows straight from the definitions that <span class="arithmatex">\(E[W_t]=0\)</span> and <span class="arithmatex">\(Var(W_t)=t\)</span> for all <span class="arithmatex">\(t\)</span> (since <span class="arithmatex">\(W_t \sim \mathcal{N}(0, t)\)</span>).</p>
+<h2 id="calculus-for-noisy-paths">Calculus for Noisy Paths</h2>
+<p>In calculus, to understand the behaviour of a function we have the tools of differentiation and integration. We would like to have something similar for functions involving noise, which for us means involving Brownian motion. Before we add noise, let's remember how classical calculus works. Suppose we have a simple, linear Ordinary Differential Equation (ODE):</p>
+<div class="arithmatex">\[ dx_t = \mu x_t dt \]</div>
+<p>This just says that the change in <span class="arithmatex">\(x\)</span> over a tiny time step <span class="arithmatex">\(dt\)</span> is proportional to its current value. To solve this, we rely on the chain rule. </p>
+<p>Let's apply the natural logarithm function, <span class="arithmatex">\(f(x) = \ln(x)\)</span>, to our variable. By the classical chain rule, the change in our function is <span class="arithmatex">\(df = f'(x) dx\)</span>. Since the derivative of <span class="arithmatex">\(\ln(x)\)</span> is <span class="arithmatex">\(1/x\)</span>, we get:</p>
+<div class="arithmatex">\[ d(\ln x_t) = \frac{1}{x_t} dx_t \]</div>
+<p>Now we just substitute our original ODE (<span class="arithmatex">\(dx_t = \mu x_t dt\)</span>) into this equation:</p>
+<div class="arithmatex">\[ d(\ln x_t) = \frac{1}{x_t} (\mu x_t dt) = \mu dt \]</div>
+<p>Suddenly, the <span class="arithmatex">\(x_t\)</span> cancels out completely! We are left with <span class="arithmatex">\(d(\ln x_t) = \mu dt\)</span>. Integrating both sides is now trivial: <span class="arithmatex">\(\ln(x_t) - \ln(x_0) = \mu t\)</span>. Exponentiating both sides gives us our solution: <span class="arithmatex">\(x_t = x_0 e^{\mu t}\)</span>.</p>
+<h3 id="the-problem-with-noise">The Problem with Noise</h3>
+<p>But what happens if our system involves noise? We add our Brownian motion <span class="arithmatex">\(W_t\)</span> into the mix to represent the noise. Now our equation looks like what we call a Stochastic Differential Equation (SDE):</p>
+<div class="arithmatex">\[dx_t = \mu x_t dt + \sigma x_t dW_t\]</div>
+<p>Just like before, this describes the change in <span class="arithmatex">\(x\)</span> over a tiny time step <span class="arithmatex">\(dt\)</span>. But now, that change is made of two parts: a predictable percentage drift (<span class="arithmatex">\(\mu dt\)</span>), and an unpredictable percentage shock (<span class="arithmatex">\(\sigma dW_t\)</span>) driven by our Brownian noise.</p>
+<p>If we want to solve this, our first instinct is to use the exact same classical chain rule trick we used for the ODE. Let's apply <span class="arithmatex">\(f(x) = \ln(x)\)</span> and see what happens. </p>
+<p>By classical calculus, <span class="arithmatex">\(d(\ln x_t) = \frac{1}{x_t} dx_t\)</span>. Substituting our SDE into this gives:</p>
+<div class="arithmatex">\[d(\ln x_t) = \frac{1}{x_t} (\mu x_t dt + \sigma x_t dW_t) = \mu dt + \sigma dW_t\]</div>
+<p>The <span class="arithmatex">\(x_t\)</span> cancels out again! Integrating both sides gives us <span class="arithmatex">\(\ln(x_t) - \ln(x_0) = \mu t + \sigma W_t\)</span>. Exponentiating both sides leads us to what seems like the exact solution:</p>
+<div class="arithmatex">\[x_t = x_0 e^{\mu t + \sigma W_t}\]</div>
+<p>This equation allows us to calculate some important quantities related to the paths driven by this SDE. Because <span class="arithmatex">\(W_t\)</span> is a Brownian motion, it is normally distributed with a variance of <span class="arithmatex">\(t\)</span>, <span class="arithmatex">\(W_t\sim \mathcal{N}(0,t)\)</span>.
+The moment generating function of <span class="arithmatex">\(W_t\)</span> is <span class="arithmatex">\(M(s)=\mathbb{E}[e^{sW_t}] = e^{\frac{1}{2}ts^2}\)</span>. Plugging <span class="arithmatex">\(s=\sigma\)</span> we get <span class="arithmatex">\(\mathbb{E}[e^{\sigma W_t}]=e^{\frac{1}{2}t \sigma^2}\)</span> Using this, we can compute the expected mean of a path given by our formula:</p>
+<div class="arithmatex">\[\mathbb{E}[x_t] = \mathbb{E}[x_0 e^{\mu t + \sigma W_t}] = x_0 e^{\mu t}\mathbb{E}[e^{\sigma W_t}] = x_0 e^{(\mu + \frac{1}{2}\sigma^2)t}\]</div>
+<p>We can use the same generating function trick to compute the variance and standard deviation. Using the identity <span class="arithmatex">\(\text{Var}(x_t) = \mathbb{E}[x_t^2] - (\mathbb{E}[x_t])^2\)</span>, we first calculate the second moment by plugging <span class="arithmatex">\(s = 2\sigma\)</span> into our moment generating function:</p>
+<div class="arithmatex">\[\mathbb{E}[x_t^2] = \mathbb{E}[(x_0 e^{\mu t + \sigma W_t})^2] = x_0^2 e^{2\mu t} \mathbb{E}[e^{2\sigma W_t}] = x_0^2 e^{2\mu t} \cdot e^{\frac{1}{2}t(2\sigma)^2} = x_0^2 e^{2\mu t + 2\sigma^2 t}\]</div>
+<p>Then we subtract the squared expectation we found earlier:</p>
+<div class="arithmatex">\[\text{Var}(x_t) = x_0^2 e^{2\mu t + 2\sigma^2 t} - \left(x_0 e^{(\mu + \frac{1}{2}\sigma^2)t}\right)^2 = x_0^2 e^{2\mu t + 2\sigma^2 t} - x_0^2 e^{2\mu t + \sigma^2 t} = x_0^2 e^{2\mu t + \sigma^2 t} (e^{\sigma^2 t} - 1) = (\mathbb{E}[x_t])^2 (e^{\sigma^2 t} - 1)\]</div>
+<p>Taking the square root gives us the standard deviation:</p>
+<div class="arithmatex">\[\text{StdDev}(x_t) = \mathbb{E}[x_t] \sqrt{e^{\sigma^2 t} - 1}\]</div>
+<p>Before we declare the equation as solved, let us test it numerically. We can simulate the true solution of the SDE by discretizing our time interval and walking forward one tiny step at a time.
+Starting at our initial value <span class="arithmatex">\(x_0=1\)</span>, to figure out where we are a fraction of a second later (after a time <span class="arithmatex">\(dt\)</span>), we just look at our equation: we add a drift term (<span class="arithmatex">\(\mu x_t dt\)</span>) to a noise term (<span class="arithmatex">\(\sigma x_t dW_t\)</span>).</p>
+<p>Using this method we obtain the path our SDE describes step by step (<span class="arithmatex">\(x_{t+dt} = x_{t} + \text{drift} + \text{noise}\)</span>). We will use this result to test the validity of our analytical solution. The following python code simulates 10,000 paths governed by this SDE and gives us the mean and standard deviation at <span class="arithmatex">\(t=10\)</span> so we can compare with our analytical solution:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">simulate_ground_truth</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">N_steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_paths</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="sd">"""</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="sd">    Simulate step-by-step SDE paths to find the true empirical moments.</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="sd">    """</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">dt</span> <span class="o">=</span> <span class="n">T</span> <span class="o">/</span> <span class="n">N_steps</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="c1"># Generate Brownian increments for 10,000 parallel paths</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">dW</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dt</span><span class="p">),</span> <span class="p">(</span><span class="n">n_paths</span><span class="p">,</span> <span class="n">N_steps</span><span class="p">))</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="c1"># Step-by-step numerical simulation (final values at T)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">increments_sim</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">dW</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">x_sim_T</span> <span class="o">=</span> <span class="n">x0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">increments_sim</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x_sim_T</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x_sim_T</span><span class="p">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="c1"># Set seed for reproducibility and run the simulation</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="n">sim_mean</span><span class="p">,</span> <span class="n">sim_std</span> <span class="o">=</span> <span class="n">simulate_ground_truth</span><span class="p">()</span>
+</code></pre></div>
+<p>Plugging <span class="arithmatex">\(\mu=0.05, \sigma=0.4, t=10\)</span> into the formulas we obtained we get:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Method</th>
+<th style="text-align: center;">Expected Mean</th>
+<th style="text-align: center;">Expected Std Dev</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Numerical Simulation</strong></td>
+<td style="text-align: center;">1.6147</td>
+<td style="text-align: center;">3.1937</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Analytical Formula</strong></td>
+<td style="text-align: center;">3.6693</td>
+<td style="text-align: center;">7.2954</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Error</strong></td>
+<td style="text-align: center;"><strong>+127.2%</strong></td>
+<td style="text-align: center;"><strong>+128.4%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>A 127% error isn't a rounding issue, something is wrong in our analytical solution. What is the problem?</p>
+<h3 id="the-missing-term">The Missing Term</h3>
+<p>The issue lies in how we compute the differential of a function. When we applied classical calculus to say that <span class="arithmatex">\(d(\ln x_t) = \frac{1}{x_t} dx_t\)</span>, we were implicitly relying on a first-order Taylor expansion.</p>
+<p>For any smooth function <span class="arithmatex">\(f(x)\)</span>, the exact change over a tiny step <span class="arithmatex">\(dx\)</span> is given by the full Taylor series:</p>
+<div class="arithmatex">\[df = f(x+dx) - f(x) = f'(x)dx + \frac{1}{2}f''(x)(dx)^2 + \frac{1}{6}f'''(x)(dx)^3 + \dots\]</div>
+<p>In classical calculus, we usually assume <span class="arithmatex">\(x_t\)</span> is a smooth, differentiable function of time. This means its change over a small interval <span class="arithmatex">\(dt\)</span> is strictly governed by its derivative: <span class="arithmatex">\(dx_t = x'(t)dt\)</span>.</p>
+<p>If we substitute this into the Taylor expansion, the second-order term becomes <span class="arithmatex">\((dx_t)^2 = (x'(t))^2 (dt)^2\)</span>. As the time step <span class="arithmatex">\(dt\)</span> shrinks to zero, <span class="arithmatex">\((dt)^2\)</span> goes to zero much faster than <span class="arithmatex">\(dt\)</span>. The higher-order terms become negligible, leaving us with the familiar first-order differential: <span class="arithmatex">\(df = f'(x)dx\)</span>.</p>
+<p>But our SDE does not describe a smooth function. It describes a path driven by Brownian motion, and Brownian motion is nowhere differentiable. Look back at the properties of <span class="arithmatex">\(dW_t\)</span>: a typical Brownian step scales with the square root of time (<span class="arithmatex">\(dW_t \sim \sqrt{dt}\)</span>).</p>
+<p>This changes the geometry of our calculus entirely. If we square a Brownian increment, we don't get something infinitely smaller than <span class="arithmatex">\(dt\)</span>. We just get <span class="arithmatex">\(dt\)</span>:</p>
+<div class="arithmatex">\[(dW_t)^2 = dt\]</div>
+<p>This is the central trick of stochastic calculus. Because the noise term scales with <span class="arithmatex">\(\sqrt{dt}\)</span>, the second-order Taylor term no longer vanishes.</p>
+<p>Applying these ideas to <span class="arithmatex">\(f(x) = \ln(x)\)</span>, the first two derivatives of our function are <span class="arithmatex">\(f'(x) = \frac{1}{x}\)</span> and <span class="arithmatex">\(f''(x) = -\frac{1}{x^2}\)</span>. Plugging these into our second-order Taylor series gives us:</p>
+<div class="arithmatex">\[d(\ln x_t) = \frac{1}{x_t} dx_t - \frac{1}{2x_t^2} (dx_t)^2\]</div>
+<p>To solve this, we first need to figure out what <span class="arithmatex">\((dx_t)^2\)</span> is. Let's carefully square our SDE (<span class="arithmatex">\(dx_t = \mu x_t dt + \sigma x_t dW_t\)</span>):</p>
+<div class="arithmatex">\[(dx_t)^2 = (\mu x_t dt + \sigma x_t dW_t)^2 = \mu^2 x_t^2 (dt)^2 + 2\mu \sigma x_t^2 (dt)(dW_t) + \sigma^2 x_t^2 (dW_t)^2\]</div>
+<p>Now we apply our rules. Any power of <span class="arithmatex">\(dt\)</span> greater than <span class="arithmatex">\(1\)</span> becomes negligible, so <span class="arithmatex">\((dt)^2 \to 0\)</span> and <span class="arithmatex">\((dt)(dW_t) \to 0\)</span>. Since <span class="arithmatex">\((dW_t)^2 = dt\)</span>, this term does not vanish. The entire expression collapses to:</p>
+<div class="arithmatex">\[(dx_t)^2 = \sigma^2 x_t^2 dt\]</div>
+<p>Now we have everything we need. We substitute <span class="arithmatex">\(dx_t\)</span> and <span class="arithmatex">\((dx_t)^2\)</span> back into our Taylor expansion for <span class="arithmatex">\(d(\ln x_t)\)</span>:</p>
+<div class="arithmatex">\[d(\ln x_t) = \frac{1}{x_t} \Big( \mu x_t dt + \sigma x_t dW_t \Big) - \frac{1}{2x_t^2} \Big( \sigma^2 x_t^2 dt \Big) = \mu dt + \sigma dW_t - \frac{1}{2}\sigma^2 dt = \left( \mu - \frac{1}{2}\sigma^2 \right) dt + \sigma dW_t\]</div>
+<p>Integrating both sides from <span class="arithmatex">\(0\)</span> to <span class="arithmatex">\(t\)</span> (and remembering that <span class="arithmatex">\(W_0 = 0\)</span>) yields:</p>
+<div class="arithmatex">\[\ln(x_t) - \ln(x_0) = \left( \mu - \frac{1}{2}\sigma^2 \right) t + \sigma W_t\]</div>
+<p>Exponentiating, we get the final solution:</p>
+<div class="arithmatex">\[x_t = x_0 e^{\left(\mu - \frac{1}{2}\sigma^2\right)t + \sigma W_t}\]</div>
+<p>With our newly derived formula, let's run the exact same reality check we did before. Our corrected analytical solution is:</p>
+<div class="arithmatex">\[x_t = x_0 e^{\left(\mu - \frac{1}{2}\sigma^2\right)t + \sigma W_t}\]</div>
+<p>Using the exact same Moment Generating Function trick (<span class="arithmatex">\(\mathbb{E}[e^{\sigma W_t}] = e^{\frac{1}{2}\sigma^2 t}\)</span>), let's calculate the expected mean of our new formula:</p>
+<div class="arithmatex">\[\mathbb{E}[x_t] = \mathbb{E}\left[x_0 e^{(\mu - \frac{1}{2}\sigma^2)t + \sigma W_t}\right] = x_0 e^{(\mu - \frac{1}{2}\sigma^2)t} \cdot \mathbb{E}[e^{\sigma W_t}] = x_0 e^{(\mu - \frac{1}{2}\sigma^2)t} \cdot e^{\frac{1}{2}\sigma^2 t} = x_0 e^{\mu t}\]</div>
+<p>We can compute the standard deviation the same way as before, obtaining:</p>
+<div class="arithmatex">\[\text{StdDev}(x_t) = x_0 e^{\mu t} \sqrt{e^{\sigma^2 t} - 1} = \mathbb{E}[x_t]\sqrt{e^{\sigma^2 t} - 1}\]</div>
+<p>Now for the final test. If we plug our parameters (<span class="arithmatex">\(\mu=0.05, \sigma=0.4, t=10\)</span>) into our corrected formulas, how do they compare against the numerical simulation?</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Method</th>
+<th style="text-align: center;">Expected Mean</th>
+<th style="text-align: center;">Expected Std Dev</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Numerical Simulation</strong></td>
+<td style="text-align: center;">1.6147</td>
+<td style="text-align: center;">3.1937</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Corrected Analytical Formula</strong></td>
+<td style="text-align: center;">1.6487</td>
+<td style="text-align: center;">3.2779</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Error</strong></td>
+<td style="text-align: center;"><strong>2.0%</strong></td>
+<td style="text-align: center;"><strong>2.5%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The massive error is gone! The analytical solution now matches the numerical simulation.
+By adding the correction term, coming from the second order Taylor expansion, we fixed our analytical solution. What we just derived from scratch is an instance of a much broader result: Itô's Lemma.</p>
+<h2 id="itos-lemma">Itô's Lemma</h2>
+<p>Itô's Lemma is the stochastic equivalent of the classical chain rule. Suppose we have a general stochastic process <span class="arithmatex">\(x_t\)</span> governed by a drift term and a volatility term:</p>
+<div class="arithmatex">\[dx_t = \mu(x,t) dt + \sigma(x,t) dW_t\]</div>
+<p>If we apply a twice-differentiable function <span class="arithmatex">\(f(t, x_t)\)</span> to this process, Itô's Lemma states that the full differential <span class="arithmatex">\(df\)</span> is:</p>
+<div class="arithmatex">\[df = \frac{\partial f}{\partial t} dt + \frac{\partial f}{\partial x} dx_t + \frac{1}{2} \frac{\partial^2 f}{\partial x^2} (dx_t)^2\]</div>
+<p>Because we know that <span class="arithmatex">\((dW_t)^2 = dt\)</span>, we can substitute <span class="arithmatex">\((dx_t)^2 = \sigma(x,t)^2 dt\)</span> directly into the equation. Grouping the deterministic <span class="arithmatex">\(dt\)</span> terms and the random <span class="arithmatex">\(dW_t\)</span> terms together gives us:</p>
+<div class="arithmatex">\[df = \left( \frac{\partial f}{\partial t} + \mu(x,t) \frac{\partial f}{\partial x} + \frac{1}{2} \sigma(x,t)^2 \frac{\partial^2 f}{\partial x^2} \right) dt + \sigma(x,t) \frac{\partial f}{\partial x} dW_t\]</div>
+<p>A very common and useful special case occurs when our underlying process is simply standard Brownian motion itself. If we apply Itô's Lemma to a function <span class="arithmatex">\(f(t, W_t)\)</span>, we have <span class="arithmatex">\(\mu=0\)</span> and <span class="arithmatex">\(\sigma=1\)</span>. The equation reduces to:</p>
+<div class="arithmatex">\[df(t, W_t) = \left( \frac{\partial f}{\partial t} + \frac{1}{2} \frac{\partial^2 f}{\partial W^2} \right) dt + \frac{\partial f}{\partial W} dW_t\]</div>
+<p>We can use Itô's Lemma to actually solve Stochastic Differential Equations. Let's look at two examples.</p>
+<h3 id="example-1-integrating-brownian-motion">Example 1: Integrating Brownian Motion</h3>
+<p>Suppose we want to find the integral <span class="arithmatex">\(\int_0^t W_s dW_s\)</span>. Classical calculus tells us <span class="arithmatex">\(\int x dx = \frac{1}{2}x^2\)</span>. Let's see what happens in stochastic calculus.</p>
+<p>We can treat standard Brownian motion as its own SDE: <span class="arithmatex">\(dx_t = 0 dt + 1 dW_t\)</span> (so <span class="arithmatex">\(\mu=0\)</span> and <span class="arithmatex">\(\sigma=1\)</span>).</p>
+<p>Let's apply Itô's Lemma to the function <span class="arithmatex">\(f(t, x) = x^2\)</span>. The derivatives are <span class="arithmatex">\(\frac{\partial f}{\partial t} = 0\)</span>, <span class="arithmatex">\(\frac{\partial f}{\partial x} = 2x\)</span>, and <span class="arithmatex">\(\frac{\partial^2 f}{\partial x^2} = 2\)</span>. Plugging these into the equation gives:</p>
+<div class="arithmatex">\[d(x_t^2) = \left( 0 + (0)(2x_t) + \frac{1}{2}(1)^2(2) \right) dt + (1)(2x_t) dW_t\]</div>
+<p>Putting <span class="arithmatex">\(x_t=W_t\)</span> we get:</p>
+<div class="arithmatex">\[d(W_t^2) = dt + 2W_t dW_t\]</div>
+<p>If we integrate both sides from <span class="arithmatex">\(0\)</span> to <span class="arithmatex">\(t\)</span> and rearrange, we get the exact analytical solution:</p>
+<div class="arithmatex">\[\int_0^t W_s dW_s = \frac{1}{2}W_t^2 - \frac{1}{2}t\]</div>
+<p>The classical rule missed the <span class="arithmatex">\(-\frac{1}{2}t\)</span> entirely.</p>
+<h3 id="example-2-the-ornstein-uhlenbeck-process">Example 2: The Ornstein-Uhlenbeck Process</h3>
+<p>SDEs don't just model exponential growth; they also model mean-reverting systems like interest rates or physical particles attached to springs. The Ornstein-Uhlenbeck process is defined as:</p>
+<div class="arithmatex">\[dx_t = -\theta x_t dt + \sigma dW_t\]</div>
+<p>To solve this, we can borrow the "integrating factor" trick from classical ODEs. Let's apply Itô's Lemma to the function <span class="arithmatex">\(f(t, x_t) = x_t e^{\theta t}\)</span>.</p>
+<p>The derivatives are <span class="arithmatex">\(\frac{\partial f}{\partial t} = \theta x_t e^{\theta t}\)</span>, <span class="arithmatex">\(\frac{\partial f}{\partial x} = e^{\theta t}\)</span>, and <span class="arithmatex">\(\frac{\partial^2 f}{\partial x^2} = 0\)</span>. Using Itô's formula:</p>
+<div class="arithmatex">\[d(x_t e^{\theta t}) = \theta x_t e^{\theta t} dt + e^{\theta t} dx_t + 0\]</div>
+<p>Substitute our SDE (<span class="arithmatex">\(dx_t = -\theta x_t dt + \sigma dW_t\)</span>) into the equation:</p>
+<div class="arithmatex">\[d(x_t e^{\theta t}) = \theta x_t e^{\theta t} dt + e^{\theta t} (-\theta x_t dt + \sigma dW_t)\]</div>
+<p>The drift terms cancel out:</p>
+<div class="arithmatex">\[d(x_t e^{\theta t}) = \sigma e^{\theta t} dW_t\]</div>
+<p>Integrating both sides from <span class="arithmatex">\(0\)</span> to <span class="arithmatex">\(t\)</span> gives us the explicit solution for the process:</p>
+<div class="arithmatex">\[x_t e^{\theta t} - x_0 = \sigma \int_0^t e^{\theta s} dW_s\]</div>
+<div class="arithmatex">\[x_t = x_0 e^{-\theta t} + \sigma \int_0^t e^{-\theta(t-s)} dW_s\]</div>
+<!-- PICTURE 2: Ornstein-Uhlenbeck vs Brownian Motion -->
+<div style="background: #282828; padding: 25px; border-radius: 8px; border: 1px solid #3c3836; margin: 2rem 0;">
+  <div style="margin-bottom: 15px; font-family: 'Iosevka', monospace; color: #ebdbb2;">
+    <span style="font-weight: 500; font-size: 1.1em;">Ornstein-Uhlenbeck</span><br>
+    <span style="font-size: 0.9em; color: #a89984;">Gray: Standard Brownian Motion (wanders) | <span style="color: #d65d0e;">Orange: OU Process (stays close to center)</span></span>
+  </div>
+  <div style="width: 100%; height: 300px;">
+    <canvas id="ouCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
+  </div>
+</div>
+
+<h3 id="example-3-the-brownian-bridge">Example 3: The Brownian Bridge</h3>
+<p>Suppose you want a stochastic process that starts at <span class="arithmatex">\(0\)</span> and is guaranteed to end exactly at <span class="arithmatex">\(0\)</span> at a specific future time, say <span class="arithmatex">\(t=1\)</span>. How do we formulate an SDE for it, and how do we solve it?</p>
+<p>To ensure the process arrives exactly at zero at <span class="arithmatex">\(t=1\)</span>, we need a drift term that pulls the path back to zero. As the deadline approaches, that pull needs to become infinitely strong. This intuition gives us the SDE for a Brownian bridge:</p>
+<div class="arithmatex">\[dx_t = -\frac{x_t}{1-t} dt + dW_t\]</div>
+<p>Let's look at the mechanics of this equation. The <span class="arithmatex">\(dW_t\)</span> is our standard noise; the <span class="arithmatex">\(-\frac{x_t}{1-t} dt\)</span> is a time-dependent restoring force.The <span class="arithmatex">\(-x_t\)</span> numerator acts like a spring: if the path wanders into positive territory, the drift is negative and pulls it down; if the path is negative, the drift pulls it up. The <span class="arithmatex">\(1-t\)</span> denominator is the deadline mechanism. When <span class="arithmatex">\(t\)</span> is close to <span class="arithmatex">\(0\)</span>, the pull is gentle. But as <span class="arithmatex">\(t\)</span> approaches <span class="arithmatex">\(1\)</span>, the denominator approaches zero, causing the strength of the restoring force to explode to infinity.</p>
+<p>We can solve this equation using another clever integrating factor. Let's apply Itô's Lemma to the function <span class="arithmatex">\(f(t, x_t) = \frac{x_t}{1-t}\)</span>.First, we compute the derivatives:<span class="arithmatex">\(\frac{\partial f}{\partial t} = \frac{x_t}{(1-t)^2}\)</span>, <span class="arithmatex">\(\frac{\partial f}{\partial x} = \frac{1}{1-t}\)</span>, and <span class="arithmatex">\(\frac{\partial^2 f}{\partial x^2} = 0\)</span>.</p>
+<p>Plugging these into Itô's equation gives:</p>
+<div class="arithmatex">\[d\left(\frac{x_t}{1-t}\right) = \frac{x_t}{(1-t)^2} dt + \frac{1}{1-t} dx_t + 0\]</div>
+<p>Now, substitute our original SDE (<span class="arithmatex">\(dx_t = -\frac{x_t}{1-t} dt + dW_t\)</span>) in place of <span class="arithmatex">\(dx_t\)</span>:</p>
+<div class="arithmatex">\[d\left(\frac{x_t}{1-t}\right) = \frac{x_t}{(1-t)^2} dt + \frac{1}{1-t} \left( -\frac{x_t}{1-t} dt + dW_t \right)\]</div>
+<p>Expand the terms on the right:</p>
+<div class="arithmatex">\[d\left(\frac{x_t}{1-t}\right) = \frac{x_t}{(1-t)^2} dt - \frac{x_t}{(1-t)^2} dt + \frac{1}{1-t} dW_t = \frac{1}{1-t} dW_t\]</div>
+<p>Now we just integrate both sides from <span class="arithmatex">\(0\)</span> to <span class="arithmatex">\(t\)</span>. Since our starting point is <span class="arithmatex">\(x_0 = 0\)</span>, the left side evaluates to:</p>
+<div class="arithmatex">\[\frac{x_t}{1-t} - 0 = \int_0^t \frac{1}{1-s} dW_s\]</div>
+<p>Multiply the <span class="arithmatex">\((1-t)\)</span> to the other side to get our explicit analytical solution:</p>
+<div class="arithmatex">\[x_t = (1-t) \int_0^t \frac{1}{1-s} dW_s\]</div>
+<p>Look at the structure of the solution. Because of the <span class="arithmatex">\((1-t)\)</span> term sitting out in front, as <span class="arithmatex">\(t \to 1\)</span>, the entire expression is forced mathematically to exactly <span class="arithmatex">\(0\)</span>. The stochastic noise is still there inside the integral, but it is ultimately killed by the <span class="arithmatex">\((1-t)\)</span> term.</p>
+<!-- PICTURE 3: Brownian Bridge -->
+<div style="background: #282828; padding: 25px; border-radius: 8px; border: 1px solid #3c3836; margin: 2rem 0;">
+  <div style="margin-bottom: 15px; font-family: 'Iosevka', monospace; color: #ebdbb2;">
+    <span style="font-weight: 500; font-size: 1.1em;">The Brownian Bridge</span><br>
+    <span style="font-size: 0.9em; color: #a89984;">50 paths forced to arrive exactly at zero at t=1.</span>
+  </div>
+  <div style="width: 100%; height: 300px;">
+    <canvas id="bridgeCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
+  </div>
+</div>
+
+<!-- Load the simulations at the end of the section -->
+<script src="../javascripts/sde-simulations.js"></script>
+
+<h2 id="a-final-remark-the-integral-problem">A Final Remark: The Integral Problem</h2>
+<p>Notice that our explicit solution for the Brownian bridge, just like our solution for the Ornstein-Uhlenbeck process, still contains an integral: <span class="arithmatex">\(\int_0^t \frac{1}{1-s} dW_s\)</span>.</p>
+<p>Throughout this text, we wrote down integrals of the form <span class="arithmatex">\(\int (\dots) dW_t\)</span>. We manipulated them and solved equations by treating <span class="arithmatex">\(dW_t\)</span> as if it were just a normal variable of integration from classical calculus.</p>
+<p>But there is a problem: standard Riemann integral strictly requires the integrating variable to have bounded variation, meaning the path must have a finite length. As we established earlier, a Brownian path is infinitely jagged. Its total variation is infinite. If you try to apply classical Riemann-Stieltjes integration to <span class="arithmatex">\(dW_t\)</span>, the sum diverges to infinity.</p>
+<p>So what does it actually mean to compute <span class="arithmatex">\(\int (\dots) dW_t\)</span>?</p>
+<p>Defining that integral rigorously requires an entirely new framework called the Itô Integral, which I decided to omit so we could get to solving SDEs in a more direct way.</p>
+<p>All you need to believe about the Itô Integral for this post is that such an integral exists, and that the fundamental theorem of calculus still holds for Itô Integrals: <span class="arithmatex">\(\int_0^t d(f(W_s)) = f(W_t) - f(W_0)\)</span>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["toc.integrate", "navigation.top", "header.autohide"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
