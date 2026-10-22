@@ -14,8 +14,6 @@
         <link rel="prev" href="../..">
       
       
-        <link rel="next" href="../callibrating-sde/">
-      
       
         
       
@@ -472,7 +470,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../callibrating-sde/" class="md-nav__link">
+      <a href="../callibrating-sde.md" class="md-nav__link">
         
   
   
@@ -783,7 +781,7 @@ By adding the correction term, coming from the second order Taylor expansion, we
 <div class="arithmatex">\[\frac{X_t}{1-t} - 0 = \int_0^t \frac{1}{1-s} dW_s\]</div>
 <p>Multiply the <span class="arithmatex">\((1-t)\)</span> to the other side to get our explicit analytical solution:</p>
 <div class="arithmatex">\[X_t = (1-t) \int_0^t \frac{1}{1-s} dW_s\]</div>
-<p>Look at the structure of the solution. Because of the <span class="arithmatex">\((1-t)\)</span> term sitting out in front, as <span class="arithmatex">\(t \to 1\)</span>, the entire expression is forced mathematically to exactly <span class="arithmatex">\(0\)</span>. The stochastic noise is still there inside the integral, but it is ultimately killed by the <span class="arithmatex">\((1-t)\)</span> term.</p>
+<p>Look at the structure of the solution: <span class="arithmatex">\(X_t = (1-t) \int_0^t \frac{1}{1-s} dW_s\)</span>. As <span class="arithmatex">\(t \to 1\)</span>, there is a battle between the <span class="arithmatex">\((1-t)\)</span> term outside going to zero and the <span class="arithmatex">\(\frac{1}{1-s}\)</span> term inside the integral blowing up to infinity. However, the variance of the integral grows like <span class="arithmatex">\(\int_0^t \frac{1}{(1-s)^2}ds = \frac{t}{1-t}\)</span>, while the <span class="arithmatex">\((1-t)\)</span> factor outside gets squared when we take the variance, giving <span class="arithmatex">\(\text{Var}(X_t) = (1-t)^2 \frac{t}{1-t} = t(1-t)\)</span>, which goes to <span class="arithmatex">\(0\)</span> as <span class="arithmatex">\(t \to 1\)</span>.</p>
 <!-- PICTURE 3: Brownian Bridge -->
 <div style="background: #282828; padding: 25px; border-radius: 8px; border: 1px solid #3c3836; margin: 2rem 0;">
   <div style="margin-bottom: 15px; font-family: 'Iosevka', monospace; color: #ebdbb2;">
@@ -801,9 +799,9 @@ By adding the correction term, coming from the second order Taylor expansion, we
 <h2 id="a-final-remark-the-integral-problem">A Final Remark: The Integral Problem</h2>
 <p>Notice that our explicit solution for the Brownian bridge, just like our solution for the Ornstein-Uhlenbeck process, still contains an integral: <span class="arithmatex">\(\int_0^t \frac{1}{1-s} dW_s\)</span>.</p>
 <p>Throughout this text, we wrote down integrals of the form <span class="arithmatex">\(\int (\dots) dW_t\)</span>. We manipulated them and solved equations by treating <span class="arithmatex">\(dW_t\)</span> as if it were just a normal variable of integration from classical calculus.</p>
-<p>But there is a problem: standard Riemann integral strictly requires the integrating variable to have bounded variation, meaning the path must have a finite length. As we established earlier, a Brownian path is infinitely jagged. Its total variation is infinite. If you try to apply classical Riemann-Stieltjes integration to <span class="arithmatex">\(dW_t\)</span>, the sum diverges to infinity.</p>
+<p>But there is a problem: standard Riemann integral strictly requires the integrating variable to have bounded variation, meaning the path must have a finite length. As we established earlier, a Brownian path is infinitely jagged. Its total variation is infinite. Because of this, if you try to apply classical Riemann-Stieltjes integration to <span class="arithmatex">\(dW_t\)</span>, the limit of the sum changes depending on where you evaluate the integrand inside each tiny step <span class="arithmatex">\(dt\)</span> (evaluating at the start of each step gives the Itô integral <span class="arithmatex">\(\frac{1}{2}W_t^2 - \frac{1}{2}t\)</span> from Example 1, whereas evaluating at the midpoint gives the classical <span class="arithmatex">\(\frac{1}{2}W_t^2\)</span>).</p>
 <p>So what does it actually mean to compute <span class="arithmatex">\(\int (\dots) dW_t\)</span>?</p>
-<p>Defining that integral rigorously requires an entirely new framework called the Itô Integral, which I decided to omit so we could get to solving SDEs in a more direct way.</p>
+<p>Defining that integral rigorously requires quite a lot of extra theory, which I decided to omit so we could get to solving SDEs in a more direct way.</p>
 <p>All you need to believe about the Itô Integral for this post is that such an integral exists, and that the fundamental theorem of calculus still holds for Itô Integrals: <span class="arithmatex">\(\int_0^t d(f(W_s)) = f(W_t) - f(W_0)\)</span>.</p>
 
 
