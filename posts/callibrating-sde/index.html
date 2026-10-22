@@ -1,0 +1,976 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Marcos Orseli">
+      
+      
+      
+        <link rel="prev" href="../itos-lemma/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Fitting Stochastic Differential Equations - Marcos Orseli | Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fitting-stochastic-differential-equations" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Marcos Orseli | Notes" class="md-header__button md-logo" aria-label="Marcos Orseli | Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Marcos Orseli | Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fitting Stochastic Differential Equations
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Marcos Orseli | Notes" class="md-nav__button md-logo" aria-label="Marcos Orseli | Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Marcos Orseli | Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../itos-lemma/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Making sense of Itô's Lemma
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fitting Stochastic Differential Equations
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fitting Stochastic Differential Equations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#generating-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generating Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generating Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#euler-maruyama-vs-exact-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Euler-Maruyama vs. Exact Solution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparing-the-two-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparing the Two Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fitting-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fitting Models
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fitting Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-likelihood-of-a-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Likelihood of a Path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solving-for-the-parameters-via-linear-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solving for the Parameters via Linear Algebra
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparing-against-a-neural-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparing Against a Neural Network
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Comparing Against a Neural Network">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-a-probabilistic-lstm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting Up a Probabilistic LSTM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-we-train-the-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Do We Train the Network?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-and-testing-the-model-in-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building and Testing the Model in Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#making-sense-of-the-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Making Sense of the Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-a-variance-of-the-ito-integral" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix A: Variance of the Itô Integral
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="fitting-stochastic-differential-equations">Fitting Stochastic Differential Equations</h1>
+<p>In my process of learning SDEs, I have looked into many introductory textbooks and lecture notes, and I have found very little about how to actually calibrate these models to data. Most texts spend chapters proving existence and uniqueness or solving equations with Itô's Lemma, assuming the drift and volatility parameters are already given. In practice, however, all we ever observe is a sequence of discrete data points, and we have to work backward to find the parameters that generated them.</p>
+<p>My plan for this post is to walk through how that calibration works from scratch. We will simulate a path from a known SDE, derive an analytical method to recover its parameters via Maximum Likelihood, and then compare that approach against a machine learning approach by training a neural network on the exact same data.</p>
+<h2 id="generating-data">Generating Data</h2>
+<p>Instead of testing our methods on real-world data, we will try an easier experiment by using artifically generated data. This will give us a good base for us to checked our learned parameters. We will pick an SDE with known ground-truth parameters, generate a synthetic path from it, and then see how well we can recover those parameters from the data points alone.</p>
+<p>As our test case, we will use the Ornstein-Uhlenbeck (OU) process, which models mean-reverting systems:</p>
+<div class="arithmatex">\[dX_t = \theta(\mu - X_t)dt + \sigma dW_t\]</div>
+<p>Here, <span class="arithmatex">\(\mu\)</span> is the long-term mean, <span class="arithmatex">\(\theta\)</span> is the speed of mean reversion, and <span class="arithmatex">\(\sigma\)</span> is the volatility.</p>
+<p>Now we face our first problem: how do we actually generate a path from this equation? The SDE is written in continuous time using infinitesimal changes <span class="arithmatex">\(dt\)</span> and <span class="arithmatex">\(dW_t\)</span>, whereas a computer can only step forward in discrete time increments of size <span class="arithmatex">\(\Delta t\)</span>.</p>
+<h3 id="euler-maruyama-vs-exact-solution">Euler-Maruyama vs. Exact Solution</h3>
+<p>The usual approach to simulating an SDE is using an Euler-Maruyama discretization. Even though it has an ugly name, it is quite simple. Splitting our interval into steps of size <span class="arithmatex">\(\Delta t\)</span>, we can approximate the evolution of our equation by substituting <span class="arithmatex">\(dX_t\)</span> with <span class="arithmatex">\(X_{t+\Delta t} - X_t\)</span>, <span class="arithmatex">\(dt\)</span> with <span class="arithmatex">\(\Delta t\)</span>, and <span class="arithmatex">\(dW_t\)</span> with <span class="arithmatex">\(\sqrt{\Delta t} Z\)</span>, where <span class="arithmatex">\(Z \sim \mathcal{N}(0,1)\)</span>. This gives us:</p>
+<div class="arithmatex">\[X_{t+\Delta t} = X_t + \theta(\mu - X_t)\Delta t + \sigma \sqrt{\Delta t} Z\]</div>
+<p>which we can iterate step-by-step to generate our paths, the method being more precise the smaller we pick the <span class="arithmatex">\(\Delta t\)</span>'s.</p>
+<p>Since the OU equation has an analytical solution, we can also use the exact solution to generate paths. By applying Itô's Lemma (<a href="../itos-lemma/#example-2-the-ornstein-uhlenbeck-process">derived in the previous post</a>), we get:</p>
+<div class="arithmatex">\[X_t = X_0 e^{-\theta t} + \mu(1 - e^{-\theta t}) + \sigma \int_0^t e^{-\theta(t-s)} dW_s\]</div>
+<p>This equation allows us to determine the exact probability distribution of the process at any arbitrary time <span class="arithmatex">\(t\)</span>.</p>
+<p>First, assuming a known starting point <span class="arithmatex">\(X_0\)</span>, the first two terms are entirely deterministic, and since the expected value of an Itô integral is zero, we get:</p>
+<div class="arithmatex">\[\mathbb{E}[X_t] = X_0 e^{-\theta t} + \mu(1 - e^{-\theta t})\]</div>
+<p>Second, the only randomness comes from the <span class="arithmatex">\(\sigma \int_0^t e^{-\theta(t-s)} dW_s\)</span> term. We know that the Itô integral of a deterministic function against Brownian motion is normally distributed, and we can calculate its variance as (see <a href="#appendix-a-variance-of-the-ito-integral">Appendix A</a>):</p>
+<div class="arithmatex">\[\text{Var}(X_t) = \frac{\sigma^2}{2\theta}(1 - e^{-2\theta t})\]</div>
+<p>Because <span class="arithmatex">\(X_t\)</span> is the sum of a deterministic constant and a normal random variable, the process itself is normally distributed for any time <span class="arithmatex">\(t\)</span>:</p>
+<div class="arithmatex">\[X_t \sim \mathcal{N}\left( X_0 e^{-\theta t} + \mu(1 - e^{-\theta t}), \, \frac{\sigma^2}{2\theta}(1 - e^{-2\theta t}) \right)\]</div>
+<p>Applying this equation on a step from <span class="arithmatex">\(t\)</span> to <span class="arithmatex">\(t + \Delta t\)</span>, we get:</p>
+<div class="arithmatex">\[X_{t+\Delta t} = X_t e^{-\theta \Delta t} + \mu(1 - e^{-\theta \Delta t}) + \sigma \sqrt{\frac{1 - e^{-2\theta \Delta t}}{2\theta}} Z\]</div>
+<p>where <span class="arithmatex">\(Z \sim \mathcal{N}(0,1)\)</span>.</p>
+<h3 id="comparing-the-two-methods">Comparing the Two Methods</h3>
+<p>How do we choose which method to use?</p>
+<p>The following code generates a sequence of standard normal samples (<span class="arithmatex">\(Z\)</span>) and applies it to both Euler-Maruyama and the exact solution method across <span class="arithmatex">\(10,000\)</span> paths. After building up the paths, we compare the empirical distribution of values at <span class="arithmatex">\(t=1000\)</span> of the two methods against the theoretical probability distribution of <span class="arithmatex">\(X_{1000}\)</span>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># 1. Define Parameters</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">theta</span> <span class="o">=</span> <span class="mf">2.0</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">mu</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">sigma</span> <span class="o">=</span> <span class="mf">1.5</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">X0</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">T</span> <span class="o">=</span> <span class="mf">1000.0</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">dt</span> <span class="o">=</span> <span class="mf">0.8</span>  <span class="c1"># Large time step to expose discretization bias</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">n_steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">T</span> <span class="o">/</span> <span class="n">dt</span><span class="p">)</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">n_paths</span> <span class="o">=</span> <span class="mi">10000</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1"># Arrays to hold the terminal values</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="n">X_em</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">n_paths</span><span class="p">,</span> <span class="n">X0</span><span class="p">)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="n">X_exact</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">n_paths</span><span class="p">,</span> <span class="n">X0</span><span class="p">)</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="c1"># Pre-calculate exact transition terms</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="n">decay</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">theta</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="n">exact_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">theta</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">theta</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)))</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="c1"># 2. Simulate Paths</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_steps</span><span class="p">):</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_paths</span><span class="p">)</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="c1"># Euler-Maruyama step</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="n">X_em</span> <span class="o">=</span> <span class="n">X_em</span> <span class="o">+</span> <span class="n">theta</span> <span class="o">*</span> <span class="p">(</span><span class="n">mu</span> <span class="o">-</span> <span class="n">X_em</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span> <span class="o">*</span> <span class="n">Z</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="c1"># Exact step</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    <span class="n">X_exact</span> <span class="o">=</span> <span class="n">X_exact</span> <span class="o">*</span> <span class="n">decay</span> <span class="o">+</span> <span class="n">mu</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">decay</span><span class="p">)</span> <span class="o">+</span> <span class="n">exact_std</span> <span class="o">*</span> <span class="n">Z</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="c1"># 3. Theoretical Distribution at t = 1000</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="n">theoretical_mean</span> <span class="o">=</span> <span class="n">X0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">theta</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="n">mu</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">theta</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="n">theoretical_var</span> <span class="o">=</span> <span class="p">(</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">theta</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">theta</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="n">theoretical_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">theoretical_var</span><span class="p">)</span>
+</code></pre></div>
+<p>Plotting the histograms of <code>X_em</code> and <code>X_exact</code> against the theoretical density gives:</p>
+<!-- PICTURE 0: Euler-Maruyama vs. Exact Distribution at t=1000 -->
+<div style="background: #282828; padding: 25px; border-radius: 8px; border: 1px solid #3c3836; margin: 2rem 0;">
+  <div style="margin-bottom: 15px; font-family: 'Iosevka', monospace; color: #ebdbb2;">
+    <span style="font-weight: 500; font-size: 1.1em;">Distribution of <span class="arithmatex">\(X_{1000}\)</span>: Euler-Maruyama vs. Exact Solution</span><br>
+    <span style="font-size: 0.9em; color: #a89984;">
+      Dashed: True Density | 
+      <span style="color: #d65d0e;">Orange: Exact Solution Histogram</span> | 
+      <span style="color: #83a598;">Blue: Euler-Maruyama Histogram</span>
+    </span>
+  </div>
+  <div style="width: 100%; height: 280px;">
+    <canvas id="ouDistCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
+  </div>
+</div>
+
+<p>We can see that the exact solution method is much more accurate than Euler-Maruyama, matching the theoretical density closely. This divergence comes from the fact that the true variance over a time step <span class="arithmatex">\(\Delta t\)</span> is <span class="arithmatex">\(\frac{\sigma^2}{2\theta}(1 - e^{-2\theta \Delta t})\)</span>, whereas Euler-Maruyama approximates it with the linear factor <span class="arithmatex">\(\sigma^2 \Delta t\)</span>. Those errors accumulate over time, requiring much smaller steps to stay accurate.</p>
+<p>For this reason, we will use the exact solution to generate paths from now on. This is not a unique property of the Ornstein-Uhlenbeck process: in general, whenever a stochastic differential equation has an exact analytical solution, it is always better to use it to generate paths.</p>
+<h2 id="fitting-models">Fitting Models</h2>
+<p>Suppose we have a path of discrete observations <span class="arithmatex">\(X_0, X_1, \dots, X_N\)</span> sampled at a constant time interval <span class="arithmatex">\(\Delta t\)</span>. How do we fit an OU model to this data?</p>
+<p>First, let us generate a single Ornstein-Uhlenbeck path with known parameters to serve as our ground truth. We simulate <span class="arithmatex">\(1,000\)</span> steps with mean-reversion speed <span class="arithmatex">\(\theta = 0.1\)</span>, long-term mean <span class="arithmatex">\(\mu = 0.0\)</span>, and volatility <span class="arithmatex">\(\sigma = 1.0\)</span>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># 1. Define True Parameters</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">theta_true</span> <span class="o">=</span> <span class="mf">0.1</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">mu_true</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">sigma_true</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">dt</span> <span class="o">=</span> <span class="mf">0.1</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">n_steps</span> <span class="o">=</span> <span class="mi">1000</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">X0</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1"># 2. Generate the Exact Path</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">)</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">X0</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="n">decay</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">theta_true</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="n">exact_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">sigma_true</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">theta_true</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">theta_true</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)))</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>    <span class="n">X</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">decay</span> <span class="o">+</span> <span class="n">mu_true</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">decay</span><span class="p">)</span> <span class="o">+</span> <span class="n">exact_std</span> <span class="o">*</span> <span class="n">Z</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div>
+<p>Plotting the generated path gives:</p>
+<!-- PICTURE 1: Simulated Ornstein-Uhlenbeck Path -->
+<div style="background: #282828; padding: 25px; border-radius: 8px; border: 1px solid #3c3836; margin: 2rem 0;">
+  <div style="margin-bottom: 15px; font-family: 'Iosevka', monospace; color: #ebdbb2;">
+    <span style="font-weight: 500; font-size: 1.1em;">Simulated Ornstein-Uhlenbeck Path</span><br>
+    <span style="font-size: 0.9em; color: #a89984;">Gray: True Mean (<span class="arithmatex">\(\mu = 0.0\)</span>) | <span style="color: #d65d0e;">Orange: Simulated Path (<span class="arithmatex">\(X_t\)</span>)</span></span>
+  </div>
+  <div style="width: 100%; height: 280px;">
+    <canvas id="ouSimCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
+  </div>
+</div>
+
+<h3 id="the-likelihood-of-a-path">The Likelihood of a Path</h3>
+<p>Now that we have data, the goal of calibration is to find the hidden parameters <span class="arithmatex">\(\theta\)</span>, <span class="arithmatex">\(\mu\)</span>, and <span class="arithmatex">\(\sigma\)</span> using nothing but our observed data points <span class="arithmatex">\(x_0, x_1, \dots, x_N\)</span>. Of course, it is not possible to recover the true parameters with 100% certainty from a single finite path, but we can estimate them by finding the specific set of parameters that maximizes the probability of our observed path occurring.</p>
+<p>Here we run into a small problem: because the Ornstein-Uhlenbeck process takes continuous values, the probability of hitting any single, exact number <span class="arithmatex">\(x_i\)</span> is zero. To make sense of the "probability of a path," we instead look at a tiny, infinitesimal interval <span class="arithmatex">\(I_i = [x_i, x_i + dx_i]\)</span> around each observed data point. If <span class="arithmatex">\(f(x)\)</span> is the probability density function of the random variable <span class="arithmatex">\(X_i\)</span>, then the probability of landing inside that tiny interval is:</p>
+<div class="arithmatex">\[P(X_i \in I_i) = \int_{x_i}^{x_i + dx_i} f(x) \, dx \approx f(x_i) \, dx_i\]</div>
+<p>With this in mind, the probability of observing our trajectory is the joint probability of the process passing through all of these tiny intervals one after another: <span class="arithmatex">\(P(X_0 \in I_0, X_1 \in I_1, \dots, X_N \in I_N)\)</span>.</p>
+<p>By the standard chain rule of probability, we can factor this joint probability into a sequence of conditional probabilities:</p>
+<div class="arithmatex">\[P(X_0 \in I_0, \dots, X_N \in I_N) = P(X_0 \in I_0) \cdot P(X_1 \in I_1 \mid X_0 \in I_0) \cdots P(X_N \in I_N \mid X_{N-1} \in I_{N-1}, \dots, X_0 \in I_0)\]</div>
+<p>In general, calculating a massive chain of conditional dependencies like this is really hard. However, the Ornstein-Uhlenbeck process is a Markov process, which means its transition to the next state depends only on its current state, not on the history of how it got there. Because our intervals <span class="arithmatex">\(I_i\)</span> are infinitesimally narrow, knowing that <span class="arithmatex">\(X_3\)</span> landed in <span class="arithmatex">\(I_3\)</span> essentially fixes its value as <span class="arithmatex">\(x_3\)</span> (up to <span class="arithmatex">\(dx_3\)</span>). It follows that a term like <span class="arithmatex">\(P(X_4 \in I_4 \mid X_3 \in I_3, X_2 \in I_2, X_1 \in I_1, X_0 \in I_0)\)</span> is well-approximated by just <span class="arithmatex">\(P(X_4 \in I_4 \mid X_3 \in I_3)\)</span>. Because of this, the probability of the entire path occurring simplifies to:</p>
+<div class="arithmatex">\[P(X_0 \in I_0, \dots, X_N \in I_N) \approx P(X_0 \in I_0) \prod_{i=1}^N P(X_i \in I_i \mid X_{i-1} \in I_{i-1})\]</div>
+<p>When our sample size (<span class="arithmatex">\(N\)</span>) is large, the weight of the initial <span class="arithmatex">\(P(X_0 \in I_0)\)</span> term is very small compared to the <span class="arithmatex">\(N\)</span> transitions that follow. To make the formula more tractable, it is common practice to condition on the initial observation, obtaining:</p>
+<div class="arithmatex">\[P(X_1 \in I_1, \dots, X_N \in I_N \mid X_0 \in I_0) \approx \prod_{i=1}^N P(X_i \in I_i \mid X_{i-1} \in I_{i-1})\]</div>
+<p>Now, if we write <span class="arithmatex">\(f(x_i \mid x_{i-1})\)</span> for the transition density from <span class="arithmatex">\(x_{i-1}\)</span> to <span class="arithmatex">\(x_i\)</span>, we can approximate each probability in the product over our infinitesimal intervals as <span class="arithmatex">\(P(X_i \in I_i \mid X_{i-1} \in I_{i-1}) \approx f(x_i \mid x_{i-1}) \, dx_i\)</span>. Plugging this in gives us:</p>
+<div class="arithmatex">\[P(X_1 \in I_1, \dots, X_N \in I_N \mid X_0 \in I_0) \approx \left( \prod_{i=1}^N f(x_i \mid x_{i-1}) \right) dx_1 dx_2 \cdots dx_N\]</div>
+<p>Remember that our goal is to find the parameters <span class="arithmatex">\(\theta\)</span>, <span class="arithmatex">\(\mu\)</span>, and <span class="arithmatex">\(\sigma\)</span> that maximize this probability. Notice that the infinitesimals <span class="arithmatex">\(dx_1 dx_2 \cdots dx_N\)</span> do not depend on the parameters; therefore, maximizing the probability is equivalent to maximizing the function:</p>
+<div class="arithmatex">\[\mathcal{L}(\theta, \mu, \sigma) = \prod_{i=1}^N f(x_i \mid x_{i-1})\]</div>
+<p>We call <span class="arithmatex">\(\mathcal{L}(\theta, \mu, \sigma)\)</span> the <strong>Likelihood function</strong>, written this way to emphasize that the data points are fixed and we are treating the expression as a function of the parameters <span class="arithmatex">\(\theta\)</span>, <span class="arithmatex">\(\mu\)</span>, and <span class="arithmatex">\(\sigma\)</span>.</p>
+<h3 id="solving-for-the-parameters-via-linear-algebra">Solving for the Parameters via Linear Algebra</h3>
+<p>From our results in Section 1, we already know the exact distribution of each step:</p>
+<div class="arithmatex">\[X_i \mid X_{i-1} \sim \mathcal{N}\left( X_{i-1} e^{-\theta \Delta t} + \mu(1 - e^{-\theta \Delta t}), \, \frac{\sigma^2}{2\theta}(1 - e^{-2\theta \Delta t}) \right)\]</div>
+<p>To keep the algebra cleaner, let us introduce three variables:</p>
+<div class="arithmatex">\[a = e^{-\theta \Delta t}, \quad b = \mu(1 - e^{-\theta \Delta t}), \quad s^2 = \frac{\sigma^2}{2\theta}(1 - e^{-2\theta \Delta t})\]</div>
+<p>With this substitution, the transition distribution is just <span class="arithmatex">\(\mathcal{N}(a X_{i-1} + b, \, s^2)\)</span>. Writing out the Gaussian density explicitly for each step <span class="arithmatex">\(f(x_i \mid x_{i-1})\)</span> and plugging it into our Likelihood function gives:</p>
+<div class="arithmatex">\[\mathcal{L}(a, b, s^2) = \prod_{i=1}^N \frac{1}{\sqrt{2\pi s^2}} \exp\left( -\frac{(x_i - a x_{i-1} - b)^2}{2s^2} \right)\]</div>
+<p>Since the product of exponentials is the exponential of a sum, we can simplify this product into a single expression:</p>
+<div class="arithmatex">\[\mathcal{L}(a, b, s^2) = \left(2\pi s^2\right)^{-N/2} \exp\left( -\frac{1}{2s^2} \sum_{i=1}^N (x_i - a x_{i-1} - b)^2 \right)\]</div>
+<p>Notice how <span class="arithmatex">\(a\)</span> and <span class="arithmatex">\(b\)</span> only appear in the summation inside the exponent, with a negative sign out front. Because the exponential function is strictly increasing and the leading factor <span class="arithmatex">\(\left(2\pi s^2\right)^{-N/2}\)</span> is strictly positive, maximizing <span class="arithmatex">\(\mathcal{L}\)</span> with respect to <span class="arithmatex">\(a\)</span> and <span class="arithmatex">\(b\)</span> (for any fixed <span class="arithmatex">\(s^2 &gt; 0\)</span>) is equivalent to minimizing the sum of squared errors:</p>
+<div class="arithmatex">\[S(a, b) = \sum_{i=1}^N (x_i - a x_{i-1} - b)^2\]</div>
+<p>If we organize our observed data points and parameters into vectors and a matrix:</p>
+<div class="arithmatex">\[Y = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_N \end{bmatrix}, \quad M = \begin{bmatrix} 1 &amp; x_0 \\ 1 &amp; x_1 \\ \vdots &amp; \vdots \\ 1 &amp; x_{N-1} \end{bmatrix}, \quad \beta = \begin{bmatrix} b \\ a \end{bmatrix}\]</div>
+<p>then each term <span class="arithmatex">\((x_i - a x_{i-1} - b)\)</span> is just the <span class="arithmatex">\(i\)</span>-th entry of the vector <span class="arithmatex">\(Y - M\beta\)</span>. Our sum of squares <span class="arithmatex">\(S(a, b)\)</span> is simply the squared Euclidean norm of this vector:</p>
+<div class="arithmatex">\[S(\beta) = \Vert Y - M\beta \Vert^2 = (Y - M\beta)^T (Y - M\beta) = Y^T Y - 2\beta^T M^T Y + \beta^T M^T M \beta\]</div>
+<p>To find the minimum, we take the gradient with respect to <span class="arithmatex">\(\beta\)</span> and set it equal to zero:</p>
+<div class="arithmatex">\[\nabla_\beta S(\beta) = -2 M^T Y + 2 M^T M \beta = 0 \implies M^T M \beta = M^T Y\]</div>
+<p>This is the classic Normal Equation from linear algebra. As long as our observed path is not completely flat (meaning the points <span class="arithmatex">\(x_0, \dots, x_{N-1}\)</span> are not all identical), the columns of <span class="arithmatex">\(M\)</span> are linearly independent and the <span class="arithmatex">\(2 \times 2\)</span> matrix <span class="arithmatex">\(M^T M\)</span> is invertible. Multiplying by its inverse gives us our optimal estimators <span class="arithmatex">\(\hat{b}\)</span> and <span class="arithmatex">\(\hat{a}\)</span> in a single step:</p>
+<div class="arithmatex">\[\hat{\beta} = \begin{bmatrix} \hat{b} \\ \hat{a} \end{bmatrix} = (M^T M)^{-1} M^T Y\]</div>
+<p>Now that we have <span class="arithmatex">\(\hat{a}\)</span> and <span class="arithmatex">\(\hat{b}\)</span>, we can plug the minimized sum of squares <span class="arithmatex">\(S(\hat{\beta}) = \Vert Y - M\hat{\beta} \Vert^2\)</span> back into our likelihood function and differentiate with respect to <span class="arithmatex">\(s^2\)</span> to find the optimal variance:</p>
+<div class="arithmatex">\[\frac{\partial \mathcal{L}}{\partial (s^2)} = (2\pi)^{-N/2} \exp\left( -\frac{S(\hat{\beta})}{2s^2} \right) \left[ -\frac{N}{2}(s^2)^{-\frac{N}{2} - 1} + (s^2)^{-\frac{N}{2}} \frac{S(\hat{\beta})}{2(s^2)^2} \right] = 0\]</div>
+<p>Since the exponential and power terms are strictly positive, the expression in the brackets must be zero, giving:</p>
+<div class="arithmatex">\[\hat{s}^2 = \frac{1}{N} S(\hat{\beta}) = \frac{1}{N} \Vert Y - M\hat{\beta} \Vert^2\]</div>
+<p>To recover the original continuous-time Ornstein-Uhlenbeck parameters, we just undo the substitutions:</p>
+<div class="arithmatex">\[\hat{\theta} = -\frac{\ln(\hat{a})}{\Delta t}, \quad \hat{\mu} = \frac{\hat{b}}{1 - \hat{a}}, \quad \hat{\sigma} = \sqrt{ \frac{2\hat{\theta} \hat{s}^2}{1 - \hat{a}^2} }\]</div>
+<p>To sum up this discussion, we reduced the calibration problem to a simple linear algebra computation that we can solve with a few lines of Python:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># 1. Construct the vector Y and matrix M</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">Y</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_steps</span><span class="p">),</span> <span class="n">X</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1"># 2. Solve the Normal Equation: beta_hat = (M^T M)^(-1) M^T Y</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">beta_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">M</span><span class="p">)</span> <span class="o">@</span> <span class="n">M</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">Y</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">b_hat</span><span class="p">,</span> <span class="n">a_hat</span> <span class="o">=</span> <span class="n">beta_hat</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="c1"># 3. Compute the residual variance: s^2 = (1/N) ||Y - M * beta_hat||^2</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="n">residuals</span> <span class="o">=</span> <span class="n">Y</span> <span class="o">-</span> <span class="n">M</span> <span class="o">@</span> <span class="n">beta_hat</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="n">s2_hat</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">n_steps</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">residuals</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">residuals</span><span class="p">)</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="c1"># 4. Undo the substitutions to recover the original parameters</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="n">theta_hat</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">a_hat</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="n">mu_hat</span> <span class="o">=</span> <span class="n">b_hat</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">a_hat</span><span class="p">)</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="n">sigma_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">theta_hat</span> <span class="o">*</span> <span class="n">s2_hat</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">a_hat</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"theta | True: </span><span class="si">{</span><span class="n">theta_true</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> | Estimated: </span><span class="si">{</span><span class="n">theta_hat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"mu    | True: </span><span class="si">{</span><span class="n">mu_true</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> | Estimated: </span><span class="si">{</span><span class="n">mu_hat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"sigma | True: </span><span class="si">{</span><span class="n">sigma_true</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> | Estimated: </span><span class="si">{</span><span class="n">sigma_hat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<p>Running this on our path gives the following estimates:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>theta | True: 0.1000 | Estimated: 0.1105
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>mu    | True: 0.0000 | Estimated: -0.6793
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>sigma | True: 1.0000 | Estimated: 0.9851
+</code></pre></div>
+<p>Our estimates for <span class="arithmatex">\(\sigma\)</span> (<code>0.9851</code> vs. <code>1.0</code>) and <span class="arithmatex">\(\theta\)</span> (<code>0.1105</code> vs. <code>0.1</code>) are very close to the true parameters, while our estimate for the long-term mean <span class="arithmatex">\(\mu\)</span> (<code>-0.6793</code> vs. <code>0.0</code>) is noticeably further off.</p>
+<p>Why is <span class="arithmatex">\(\hat{\mu}\)</span> harder to estimate? Volatility <span class="arithmatex">\(\sigma\)</span> is estimated from the size of the step-by-step fluctuations, so having <span class="arithmatex">\(1,000\)</span> steps gives us plenty of information to recover it accurately. Estimating the mean <span class="arithmatex">\(\mu\)</span> depends on watching the process cross back and forth around its center of gravity many times. With a small mean-reversion speed (<span class="arithmatex">\(\theta = 0.1\)</span>), the pull toward zero is quite weak. To get a more precise estimate of <span class="arithmatex">\(\mu\)</span>, we would need a longer time horizon that lets the path bounce around the mean more times.</p>
+<h2 id="comparing-against-a-neural-network">Comparing Against a Neural Network</h2>
+<p>In Section 2, we took a classical approach to modeling: we started with a differential equation, solved it, and used the exact solution to fit the parameters to our data. Another approach that is very common when we have a sequence of data points is to throw a machine learning model directly at the data.</p>
+<p>The goal of this section is to test how that approach compares against our analytical model. Can a neural network learn the dynamics of the process on its own by only looking at our simulated path?</p>
+<p>In Section 2, fitting our analytical model relied on three properties of the Ornstein-Uhlenbeck process:</p>
+<ul>
+<li><strong>The Markov property:</strong> Only the current state <span class="arithmatex">\(x_{i-1}\)</span> matters for predicting <span class="arithmatex">\(x_i\)</span>.</li>
+<li><strong>A linear drift:</strong> The expected value of the next step is a simple straight line, <span class="arithmatex">\(a x_{i-1} + b\)</span>.</li>
+<li><strong>Constant variance:</strong> The random noise around that expectation is Gaussian with a fixed variance <span class="arithmatex">\(s^2\)</span>.</li>
+</ul>
+<p>We would not know these facts just by looking at the data, and neither will a neural network if we simply feed it the observed points. In that sense, this comparison is a bit unfair: knowing ahead of time that the ground-truth path was generated by an Ornstein-Uhlenbeck process makes it much easier to fit a model of the exact same type. Still, running this experiment lets us see how an analytical approach compares against the usual machine learning approach of fitting a black-box neural network.</p>
+<h3 id="setting-up-a-probabilistic-lstm">Setting Up a Probabilistic LSTM</h3>
+<p>How do we actually set up a neural network for this? Suppose we are at step <span class="arithmatex">\(i-1\)</span> and want to predict the next value <span class="arithmatex">\(x_i\)</span>. Because we are not assuming the Markov property, we cannot just feed the single point <span class="arithmatex">\(x_{i-1}\)</span> into the network. Instead, we feed it a window of the last <span class="arithmatex">\(k\)</span> observations, which we will call <span class="arithmatex">\(H_{i-1} = (x_{i-k}, \dots, x_{i-1})\)</span>.</p>
+<p>For sequential time-series data, a standard machine learning choice is an <strong>LSTM (Long Short-Term Memory)</strong> network. Usually, these networks take a window <span class="arithmatex">\(H_{i-1}\)</span> and output a single number: the best guess <span class="arithmatex">\(\mu_w(H_{i-1})\)</span> for the next point <span class="arithmatex">\(x_i\)</span> (where <span class="arithmatex">\(w\)</span> represents the weights of the network).</p>
+<p>In a noisy process, however, a single guess is never going to hit <span class="arithmatex">\(x_i\)</span> exactly; there will always be some random error around our prediction:</p>
+<div class="arithmatex">\[x_i = \mu_w(H_{i-1}) + \text{error}\]</div>
+<p>Unless we have more information about the process we are trying to model, it is usual to assume that the error follows a Gaussian distribution with mean <span class="arithmatex">\(0\)</span> and some variance <span class="arithmatex">\(s^2\)</span>. In Section 2, we knew the variance <span class="arithmatex">\(s^2\)</span> was the exact same constant at every step. Our network does not know that, so we will not assume that it is constant.</p>
+<p>Instead, for every window our network will produce two numbers: a predicted value <span class="arithmatex">\(\mu_w(H_{i-1})\)</span> and a predicted variance <span class="arithmatex">\(s^2_w(H_{i-1})\)</span>. Saying that the error around <span class="arithmatex">\(\mu_w(H_{i-1})\)</span> is Gaussian with variance <span class="arithmatex">\(s^2_w(H_{i-1})\)</span> is the exact same thing as saying the next step is drawn from a Gaussian distribution:</p>
+<div class="arithmatex">\[X_i \mid H_{i-1} \sim \mathcal{N}\left(\mu_w(H_{i-1}), \, s^2_w(H_{i-1})\right)\]</div>
+<h3 id="how-do-we-train-the-network">How Do We Train the Network?</h3>
+<p>Just like we did in Section 2, we want to find the weights that maximize the likelihood function:</p>
+<div class="arithmatex">\[\mathcal{L}(w) = \prod_{i=k}^N \frac{1}{\sqrt{2\pi s^2_w(H_{i-1})}} \exp\left( -\frac{\left(x_i - \mu_w(H_{i-1})\right)^2}{2s^2_w(H_{i-1})} \right)\]</div>
+<p>To maximize this function, we cannot use the same trick from Section 2 where we reduced it to a squared error minimization. The problem is that the variance term outside the exponential now changes at every step and depends on the weights <span class="arithmatex">\(w\)</span>. Without that trick, we have to solve for the weights <span class="arithmatex">\(w\)</span> numerically, and the usual approach is gradient descent.</p>
+<p>Now we hit another problem: running gradient descent directly on <span class="arithmatex">\(\mathcal{L}(w)\)</span> can go badly on a computer. By the product rule, every term in the derivative <span class="arithmatex">\(\nabla_w \mathcal{L}(w)\)</span> is multiplied by nearly <span class="arithmatex">\(N\)</span> densities. When multiplying hundreds of potentially small numbers together, the computer rounds the result down to zero, stalling gradient descent.</p>
+<p>To fix this, we consider the logarithm of <span class="arithmatex">\(\mathcal{L}(w)\)</span> instead. Because the logarithm is an increasing function, <span class="arithmatex">\(\ln \mathcal{L}(w)\)</span> has its maximum at the exact same weights <span class="arithmatex">\(w\)</span> as <span class="arithmatex">\(\mathcal{L}(w)\)</span>, and it turns our product into a sum, which is much better behaved numerically. Since gradient descent algorithms are written to minimize a function instead of maximizing it, it is common to minimize <span class="arithmatex">\(-\ln \mathcal{L}(w)\)</span> instead. Another common practice is to divide the function by the number of steps <span class="arithmatex">\(M = N - k + 1\)</span> to get an average per step, giving us the <strong>Mean Negative Log-Likelihood (NLL)</strong>:</p>
+<div class="arithmatex">\[\text{NLL}(w) = -\frac{1}{M} \ln \mathcal{L}(w) = \frac{1}{2M} \sum_{i=k}^N \left( \ln\left(2\pi s^2_w(H_{i-1})\right) + \frac{\left(x_i - \mu_w(H_{i-1})\right)^2}{s^2_w(H_{i-1})} \right)\]</div>
+<p>Looking at the pieces inside the sum, we can understand the tradeoff the network is trying to balance. To make the function small, it wants to put its guess <span class="arithmatex">\(\mu_w\)</span> close to the true point <span class="arithmatex">\(x_i\)</span> so the squared error <span class="arithmatex">\((x_i - \mu_w)^2\)</span> is small. It can also make the first term <span class="arithmatex">\(\ln(2\pi s^2_w)\)</span> smaller by predicting a tiny variance <span class="arithmatex">\(s^2_w\)</span>. But there is a catch: <span class="arithmatex">\(s^2_w\)</span> sits in the denominator of the second term, so shrinking it makes that error term blow up whenever <span class="arithmatex">\(\mu_w\)</span> misses <span class="arithmatex">\(x_i\)</span>.</p>
+<h3 id="building-and-testing-the-model-in-python">Building and Testing the Model in Python</h3>
+<p>Because a neural network has thousands of weights, judging it only on the <span class="arithmatex">\(1,000\)</span> steps it was trained on is misleading: with that much capacity, it can just memorize the random jumps in our path.</p>
+<p>To see how well our models generalize to unseen data, we first extend our ground-truth path from <span class="arithmatex">\(t = 1,000\)</span> to <span class="arithmatex">\(t = 2,000\)</span>. We will fit both models on the first <span class="arithmatex">\(1,000\)</span> steps (<strong>In-Sample</strong>) and test them on the next <span class="arithmatex">\(1,000\)</span> future steps (<strong>Out-of-Sample</strong>):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn.functional</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">F</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1"># Extend our ground-truth path from step 1,000 to 2,000</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>  <span class="c1"># Do not use the same random seed as before</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">Z_future</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">)</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="n">X_full</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="n">X_full</span><span class="p">[:</span><span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span>  <span class="c1"># First 1,000 steps from Section 2</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Z_future</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="n">X_full</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_full</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">decay</span> <span class="o">+</span> <span class="n">mu_true</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">decay</span><span class="p">)</span> <span class="o">+</span> <span class="n">exact_std</span> <span class="o">*</span> <span class="n">z</span>
+</code></pre></div>
+<p>Next, we cut this path into sliding windows <span class="arithmatex">\(H_{i-1}\)</span> of length <span class="arithmatex">\(k = 10\)</span>. Each window <span class="arithmatex">\((x_{i-10}, \dots, x_{i-1})\)</span> is paired with the single next point <span class="arithmatex">\(x_i\)</span> that we want to predict, and we split the pairs at step <span class="arithmatex">\(1,000\)</span> into our training and test sets:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">k</span> <span class="o">=</span> <span class="mi">10</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_full</span><span class="p">)):</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="n">xs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">X_full</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="n">k</span><span class="p">:</span><span class="n">i</span><span class="p">])</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="n">ys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">X_full</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">W_seq</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">Y_seq</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ys</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="c1"># Split into In-Sample (up to step 1,000) and Out-of-Sample (steps 1,001 to 2,000)</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="n">split</span> <span class="o">=</span> <span class="n">n_steps</span> <span class="o">-</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="n">W_train</span><span class="p">,</span> <span class="n">Y_train</span> <span class="o">=</span> <span class="n">W_seq</span><span class="p">[:</span><span class="n">split</span><span class="p">],</span> <span class="n">Y_seq</span><span class="p">[:</span><span class="n">split</span><span class="p">]</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="n">W_test</span><span class="p">,</span>  <span class="n">Y_test</span>  <span class="o">=</span> <span class="n">W_seq</span><span class="p">[</span><span class="n">split</span><span class="p">:],</span> <span class="n">Y_seq</span><span class="p">[</span><span class="n">split</span><span class="p">:]</span>
+</code></pre></div>
+<p>Now we define the network itself. It uses two layers:</p>
+<ul>
+<li><strong>An LSTM layer:</strong> In Section 2, we knew that the single value <span class="arithmatex">\(x_{i-1}\)</span> was the only feature we needed. Here, the LSTM layer reads all <span class="arithmatex">\(10\)</span> points in the window <span class="arithmatex">\(H_{i-1}\)</span> and summarizes them into a vector of <span class="arithmatex">\(32\)</span> features.</li>
+<li><strong>A Linear layer:</strong> Takes a linear combination of those <span class="arithmatex">\(32\)</span> features to output two numbers. The first number is our predicted mean <span class="arithmatex">\(\mu_w(H_{i-1})\)</span>. Since the variance <span class="arithmatex">\(s^2_w(H_{i-1})\)</span> inside our NLL formula must be positive, we pass the second number through the <span class="arithmatex">\(\text{Softplus}\)</span> function, <span class="arithmatex">\(\ln(1 + e^z)\)</span>, which maps any real number to <span class="arithmatex">\((0, \infty)\)</span>.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">ProbabilisticLSTM</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">32</span><span class="p">):</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">lstm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w_seq</span><span class="p">):</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        <span class="n">out</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstm</span><span class="p">(</span><span class="n">w_seq</span><span class="p">)</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>        <span class="n">features</span> <span class="o">=</span> <span class="n">out</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>  <span class="c1"># The 32 features summarizing each window</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>        <span class="n">mu</span> <span class="o">=</span> <span class="n">params</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>        <span class="n">s2</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softplus</span><span class="p">(</span><span class="n">params</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="mf">1e-6</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>        <span class="k">return</span> <span class="n">mu</span><span class="p">,</span> <span class="n">s2</span>
+</code></pre></div>
+<p>To train the network, we write out our <span class="arithmatex">\(\text{NLL}(w)\)</span> equation in PyTorch and run gradient descent for <span class="arithmatex">\(500\)</span> steps on the training windows:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">gaussian_nll</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">s2</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">s2</span><span class="p">)</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">hidden_size</span> <span class="o">=</span> <span class="mi">32</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">lr</span> <span class="o">=</span> <span class="mf">0.01</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">500</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="n">model</span> <span class="o">=</span> <span class="n">ProbabilisticLSTM</span><span class="p">(</span><span class="n">hidden_size</span><span class="o">=</span><span class="n">hidden_size</span><span class="p">)</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>    <span class="n">mu_pred</span><span class="p">,</span> <span class="n">s2_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">W_train</span><span class="p">)</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>    <span class="n">loss</span> <span class="o">=</span> <span class="n">gaussian_nll</span><span class="p">(</span><span class="n">Y_train</span><span class="p">,</span> <span class="n">mu_pred</span><span class="p">,</span> <span class="n">s2_pred</span><span class="p">)</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</code></pre></div>
+<p>Finally, we evaluate the Mean NLL across all three models—the true parameters, our calibrated parameters <span class="arithmatex">\((\hat{a}, \hat{b}, \hat{s}^2)\)</span> from Section 2, and the trained LSTM:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">ou_nll</span><span class="p">(</span><span class="n">x_prev</span><span class="p">,</span> <span class="n">x_curr</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="n">mu_ou</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">x_prev</span> <span class="o">+</span> <span class="n">b</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">s2</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">x_curr</span> <span class="o">-</span> <span class="n">mu_ou</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">s2</span><span class="p">)</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">a_true</span><span class="p">,</span> <span class="n">b_true</span><span class="p">,</span> <span class="n">s2_true</span> <span class="o">=</span> <span class="n">decay</span><span class="p">,</span> <span class="n">mu_true</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">decay</span><span class="p">),</span> <span class="n">exact_std</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="n">x_prev_train</span><span class="p">,</span> <span class="n">x_curr_train</span> <span class="o">=</span> <span class="n">X_full</span><span class="p">[</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">n_steps</span><span class="p">],</span> <span class="n">X_full</span><span class="p">[</span><span class="n">k</span><span class="p">:</span><span class="n">n_steps</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="n">x_prev_test</span><span class="p">,</span>  <span class="n">x_curr_test</span>  <span class="o">=</span> <span class="n">X_full</span><span class="p">[</span><span class="n">n_steps</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>  <span class="n">X_full</span><span class="p">[</span><span class="n">n_steps</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    <span class="n">mu_train</span><span class="p">,</span> <span class="n">s2_train</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">W_train</span><span class="p">)</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>    <span class="n">mu_test</span><span class="p">,</span>  <span class="n">s2_test</span>  <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">W_test</span><span class="p">)</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    <span class="n">lstm_train_nll</span> <span class="o">=</span> <span class="n">gaussian_nll</span><span class="p">(</span><span class="n">Y_train</span><span class="p">,</span> <span class="n">mu_train</span><span class="p">,</span> <span class="n">s2_train</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>    <span class="n">lstm_test_nll</span>  <span class="o">=</span> <span class="n">gaussian_nll</span><span class="p">(</span><span class="n">Y_test</span><span class="p">,</span>  <span class="n">mu_test</span><span class="p">,</span>  <span class="n">s2_test</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="n">results</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>    <span class="s2">"Ground Truth OU"</span><span class="p">:</span>      <span class="p">(</span><span class="n">ou_nll</span><span class="p">(</span><span class="n">x_prev_train</span><span class="p">,</span> <span class="n">x_curr_train</span><span class="p">,</span> <span class="n">a_true</span><span class="p">,</span> <span class="n">b_true</span><span class="p">,</span> <span class="n">s2_true</span><span class="p">),</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>                             <span class="n">ou_nll</span><span class="p">(</span><span class="n">x_prev_test</span><span class="p">,</span>  <span class="n">x_curr_test</span><span class="p">,</span>  <span class="n">a_true</span><span class="p">,</span> <span class="n">b_true</span><span class="p">,</span> <span class="n">s2_true</span><span class="p">)),</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>    <span class="s2">"Analytical MLE (OLS)"</span><span class="p">:</span> <span class="p">(</span><span class="n">ou_nll</span><span class="p">(</span><span class="n">x_prev_train</span><span class="p">,</span> <span class="n">x_curr_train</span><span class="p">,</span> <span class="n">a_hat</span><span class="p">,</span> <span class="n">b_hat</span><span class="p">,</span> <span class="n">s2_hat</span><span class="p">),</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>                             <span class="n">ou_nll</span><span class="p">(</span><span class="n">x_prev_test</span><span class="p">,</span>  <span class="n">x_curr_test</span><span class="p">,</span>  <span class="n">a_hat</span><span class="p">,</span> <span class="n">b_hat</span><span class="p">,</span> <span class="n">s2_hat</span><span class="p">)),</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>    <span class="s2">"LSTM"</span><span class="p">:</span>                 <span class="p">(</span><span class="n">lstm_train_nll</span><span class="p">,</span> <span class="n">lstm_test_nll</span><span class="p">),</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="p">}</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'Model'</span><span class="si">:</span><span class="s2">&lt;22</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">'In-Sample NLL'</span><span class="si">:</span><span class="s2">&lt;14</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">'Out-of-Sample NLL'</span><span class="si">:</span><span class="s2">&lt;17</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">58</span><span class="p">)</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">train_nll</span><span class="p">,</span> <span class="n">test_nll</span><span class="p">)</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">&lt;22</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">train_nll</span><span class="si">:</span><span class="s2">&lt;14.4f</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">test_nll</span><span class="si">:</span><span class="s2">&lt;17.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Model                  | In-Sample NLL  | Out-of-Sample NLL
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>----------------------------------------------------------
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>Ground Truth OU        | 0.2480         | 0.2664           
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>Analytical MLE (OLS)   | 0.2473         | 0.2665           
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>LSTM                   | -0.0490        | 1.8643      
+</code></pre></div>
+<h3 id="making-sense-of-the-results">Making Sense of the Results</h3>
+<p>Notice that our Analytical MLE (<code>0.2473</code>) gets a slightly lower score on the training path than the Ground Truth parameters (<code>0.2480</code>) that generated it. This is expected: when fitting the model, we found the parameters that minimize NLL on those specific <span class="arithmatex">\(1,000\)</span> steps. The neural network, however, gets a much smaller NLL (<code>-0.0490</code>).</p>
+<p>When we step into the future (<span class="arithmatex">\(t=1000\)</span> to <span class="arithmatex">\(t=2000\)</span>), the analytical model (<code>0.2665</code>) performs almost identically to the ground truth (<code>0.2664</code>), while the neural network NLL jumps to <code>1.8643</code>, showing that it overfit the training data.</p>
+<p>We can see how this overfitting happens by plotting the step-by-step variance <span class="arithmatex">\(s^2_w(H_{i-1})\)</span> predicted by the LSTM against the constant variance of the Ornstein-Uhlenbeck process:</p>
+<!-- PICTURE 2: Predicted Step Variance (Analytical MLE vs LSTM) -->
+<div style="background: #282828; padding: 25px; border-radius: 8px; border: 1px solid #3c3836; margin: 2rem 0;">
+  <div style="margin-bottom: 15px; font-family: 'Iosevka', monospace; color: #ebdbb2;">
+    <span style="font-weight: 500; font-size: 1.1em;">Predicted Step Variance: Analytical MLE vs. LSTM</span><br>
+    <span style="font-size: 0.9em; color: #a89984;">Gray: True / Analytical Variance (<span class="arithmatex">\(s^2 \approx 0.099\)</span>) | <span style="color: #d65d0e;">Orange: LSTM Predicted Variance (<span class="arithmatex">\(s^2_w\)</span>)</span> | <span style="color: #83a598;">Blue Dashed: Train / Test Split (<span class="arithmatex">\(t = 1000\)</span>)</span>
+  </div>
+  <div style="width: 100%; height: 300px;">
+    <canvas id="ouVarianceCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
+  </div>
+</div>
+
+<p>We can see that even though the true process has a constant variance, the neural network learned a very jagged variance path, with a lot of jumps from one window to the next. This is another clear sign of overfitting: the high number of parameters allowed the network to memorize specific patterns of the path.</p>
+<p>Our analytical model, on the other hand, had only three numbers to learn. Because the math of the Ornstein-Uhlenbeck process already gave us the exact structure of the process, the model had no room to memorize the noise, allowing it to generalize to the future almost as well as the true process itself.</p>
+<p>Of course, we took a very naive approach by parameterizing the data directly with a standard sequence network. There are much better ways of doing this, and there is a whole field of Neural SDEs where people study how to combine the modeling capabilities of stochastic differential equations with the flexibility of neural networks. The following two preprints give an overview of Neural SDEs and how differential equations can be combined with deep learning for time-series modeling:</p>
+<ul>
+<li><a href="https://arxiv.org/abs/2202.02435"><em>On Neural Differential Equations</em></a> — Patrick Kidger (2022)</li>
+<li><a href="https://arxiv.org/abs/2502.09885"><em>Comprehensive Review of Neural Differential Equations for Time Series Analysis</em></a> — YongKyung Oh et al. (2025)</li>
+</ul>
+<h2 id="appendix-a-variance-of-the-ito-integral">Appendix A: Variance of the Itô Integral</h2>
+<p>In Section 1, we used the fact that the stochastic term <span class="arithmatex">\(I_t = \sigma \int_0^t e^{-\theta(t-s)} dW_s\)</span> has variance <span class="arithmatex">\(\frac{\sigma^2}{2\theta}(1 - e^{-2\theta t})\)</span>. We can derive this directly from the definition of the Itô integral.</p>
+<p>Partition the time interval <span class="arithmatex">\([0, t]\)</span> into <span class="arithmatex">\(n\)</span> small steps <span class="arithmatex">\(0 = t_0 &lt; t_1 &lt; \dots &lt; t_n = t\)</span> of width <span class="arithmatex">\(\Delta s = t_k - t_{k-1}\)</span>. The Itô integral is the limit of the Riemann-like sum:</p>
+<div class="arithmatex">\[I_t = \sigma \lim_{n \to \infty} \sum_{k=1}^n e^{-\theta(t - t_{k-1})} \Delta W_k\]</div>
+<p>where the Brownian increments <span class="arithmatex">\(\Delta W_k = W_{t_k} - W_{t_{k-1}}\)</span> are independent random variables distributed as <span class="arithmatex">\(\mathcal{N}(0, \Delta s)\)</span>.</p>
+<p>Because the increments <span class="arithmatex">\(\Delta W_k\)</span> are independent, the variance of the sum is simply the sum of the individual variances:</p>
+<div class="arithmatex">\[\text{Var}(I_t) = \sigma^2 \lim_{n \to \infty} \sum_{k=1}^n \text{Var}\left( e^{-\theta(t - t_{k-1})} \Delta W_k \right)\]</div>
+<p>Pulling the deterministic factor out of the variance squares it, and substituting <span class="arithmatex">\(\text{Var}(\Delta W_k) = \Delta s\)</span> gives:</p>
+<div class="arithmatex">\[\text{Var}(I_t) = \sigma^2 \lim_{n \to \infty} \sum_{k=1}^n e^{-2\theta(t - t_{k-1})} \Delta s\]</div>
+<p>As <span class="arithmatex">\(n \to \infty\)</span>, this sum is the standard Riemann integral of <span class="arithmatex">\(e^{-2\theta(t-s)}\)</span> from <span class="arithmatex">\(0\)</span> to <span class="arithmatex">\(t\)</span>:</p>
+<div class="arithmatex">\[\text{Var}(I_t) = \sigma^2 \int_0^t e^{-2\theta(t-s)} ds = \sigma^2 \left[ \frac{e^{-2\theta(t-s)}}{2\theta} \right]_{s=0}^{s=t} = \frac{\sigma^2}{2\theta}(1 - e^{-2\theta t})\]</div>
+<!-- Load the scripts from your new subfolder at the bottom of the post -->
+<script src="../../javascripts/callibrating-sde/ou-plots.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["toc.integrate", "navigation.top", "header.autohide"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
