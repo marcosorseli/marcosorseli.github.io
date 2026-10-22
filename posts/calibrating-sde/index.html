@@ -11,6 +11,8 @@
       
       
       
+        <link rel="prev" href="../itos-lemma/">
+      
       
       
         
@@ -230,18 +232,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -262,7 +266,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -305,10 +309,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../callibrating-sde.md" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fitting Stochastic Differential Equations
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -324,6 +355,176 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#generating-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generating Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generating Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#euler-maruyama-vs-exact-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Euler-Maruyama vs. Exact Solution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparing-the-two-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparing the Two Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fitting-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fitting Models
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fitting Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-likelihood-of-a-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Likelihood of a Path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solving-for-the-parameters-via-linear-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solving for the Parameters via Linear Algebra
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparing-against-a-neural-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparing Against a Neural Network
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Comparing Against a Neural Network">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-a-probabilistic-lstm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting Up a Probabilistic LSTM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-we-train-the-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Do We Train the Network?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-and-testing-the-model-in-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building and Testing the Model in Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#making-sense-of-the-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Making Sense of the Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix A
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
