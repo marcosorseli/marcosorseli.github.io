@@ -576,7 +576,7 @@
 <!-- Load the logic from outside -->
 <script src="../../javascripts/itos-lemma/brownian-slider.js"></script>
 
-<p>As you can see in the image, the resulting path when we drag the button all the way to the right, is a jagged, fractal-like, line. While Brownian motion (which we denote by <span class="arithmatex">\(W_t\)</span>) can be obtained via this limiting process, it is also characterized by the following properties:</p>
+<p>As you can see, when we drag the slider all the way to the right, the resulting path is a jagged, fractal-like line. While Brownian motion (which we denote by <span class="arithmatex">\(W_t\)</span>) can be obtained via this limiting process, it is also characterized by the following properties:</p>
 <ol>
 <li><strong>Starts at zero:</strong> <span class="arithmatex">\(W_0 = 0\)</span>.</li>
 <li><strong>Continuous paths:</strong> The function <span class="arithmatex">\(t \mapsto W_t\)</span> is continuous everywhere.</li>
@@ -719,7 +719,7 @@ Starting at our initial value <span class="arithmatex">\(X_0=1\)</span>, to figu
 </tr>
 </tbody>
 </table>
-<p>The massive error is gone! The analytical solution now matches the numerical simulation.
+<p>The massive error is gone! The analytical solution now matches the numerical simulation, up to the 2% or so of noise you’d expect from 10000 random paths.
 By adding the correction term, coming from the second order Taylor expansion, we fixed our analytical solution. What we just derived from scratch is an instance of a much broader result: Itô's Lemma.</p>
 <h2 id="itos-lemma">Itô's Lemma</h2>
 <p>Itô's Lemma is the stochastic equivalent of the classical chain rule. Suppose we have a general stochastic process <span class="arithmatex">\(X_t\)</span> governed by a drift term and a volatility term:</p>
@@ -803,7 +803,7 @@ By adding the correction term, coming from the second order Taylor expansion, we
 <h2 id="a-final-remark-the-integral-problem">A Final Remark: The Integral Problem</h2>
 <p>Notice that our explicit solution for the Brownian bridge, just like our solution for the Ornstein-Uhlenbeck process, still contains an integral: <span class="arithmatex">\(\int_0^t \frac{1}{1-s} dW_s\)</span>.</p>
 <p>Throughout this text, we wrote down integrals of the form <span class="arithmatex">\(\int (\dots) dW_t\)</span>. We manipulated them and solved equations by treating <span class="arithmatex">\(dW_t\)</span> as if it were just a normal variable of integration from classical calculus.</p>
-<p>But there is a problem. A Riemann-style integral needs the integrating variable to have bounded variation, meaning its path has finite length. As we established earlier, a Brownian path is infinitely jagged, so its length is infinite. In practice, the answer then depends on where you evaluate the integrand inside each tiny step. Evaluating at the start of each step gives the Itô integral from Example 1, <span class="arithmatex">\(\frac{1}{2}W_t^2 - \frac{1}{2}t\)</span>. Evaluating at the midpoint gives the answer classical calculus would predict, <span class="arithmatex">\(\frac{1}{2}W_t^2\)</span>.</p>
+<p>But there is a problem. A Riemann-style integral needs the integrating variable to have bounded variation, meaning its path has finite length. As we established earlier, a Brownian path is infinitely jagged, so its length is infinite. Worse, the answer then depends on where you evaluate the integrand inside each tiny step. Evaluating at the start of each step gives the Itô integral from Example 1, <span class="arithmatex">\(\frac{1}{2}W_t^2 - \frac{1}{2}t\)</span>. Evaluating at the midpoint gives the answer classical calculus would predict, <span class="arithmatex">\(\frac{1}{2}W_t^2\)</span>.</p>
 <p>So what does it actually mean to compute <span class="arithmatex">\(\int (\dots) dW_t\)</span>?</p>
 <p>Defining that integral rigorously requires quite a lot of extra theory, which I decided to omit so we could get to solving SDEs in a more direct way.</p>
 <p>All you need to believe about the Itô Integral for this post is that such an integral exists, and that the fundamental theorem of calculus still holds for Itô Integrals: <span class="arithmatex">\(\int_0^t d(f(W_s)) = f(W_t) - f(W_0)\)</span>.</p>
