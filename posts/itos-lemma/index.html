@@ -714,8 +714,8 @@ Starting at our initial value <span class="arithmatex">\(X_0=1\)</span>, to figu
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Error</strong></td>
-<td style="text-align: center;"><strong>2.0%</strong></td>
-<td style="text-align: center;"><strong>2.5%</strong></td>
+<td style="text-align: center;"><strong>2.1%</strong></td>
+<td style="text-align: center;"><strong>2.6%</strong></td>
 </tr>
 </tbody>
 </table>
@@ -734,7 +734,7 @@ By adding the correction term, coming from the second order Taylor expansion, we
 <h3 id="example-1-integrating-brownian-motion">Example 1: Integrating Brownian Motion</h3>
 <p>Suppose we want to find the integral <span class="arithmatex">\(\int_0^t W_s dW_s\)</span>. Classical calculus tells us <span class="arithmatex">\(\int x dx = \frac{1}{2}x^2\)</span>. Let's see what happens in stochastic calculus.</p>
 <p>We can treat standard Brownian motion as its own SDE: <span class="arithmatex">\(dX_t = 0 dt + 1 dW_t\)</span> (so <span class="arithmatex">\(\mu=0\)</span> and <span class="arithmatex">\(\sigma=1\)</span>).</p>
-<p>Let's apply Itô's Lemma to the function <span class="arithmatex">\(f(t, X_t) = X_t^2\)</span>. The derivatives are <span class="arithmatex">\(\frac{\partial f}{\partial t} = 0\)</span>, <span class="arithmatex">\(\frac{\partial f}{\partial {X_t}} = 2X_t\)</span>, and <span class="arithmatex">\(\frac{\partial^2 f}{\partial {X_t}^2} = 2\)</span>.</p>
+<p>Let's apply Itô's Lemma to the function <span class="arithmatex">\(f(t, X_t) = X_t^2\)</span>. The derivatives are <span class="arithmatex">\(\frac{\partial f}{\partial t} = 0\)</span>, <span class="arithmatex">\(\frac{\partial f}{\partial {X_t}} = 2X_t\)</span>, and <span class="arithmatex">\(\frac{\partial^2 f}{\partial {X_t}^2} = 2\)</span>. Plugging these into the equation gives:</p>
 <div class="arithmatex">\[d(X_t^2) = \left( 0 + (0)(2X_t) + \frac{1}{2}(1)^2(2) \right) dt + (1)(2X_t) dW_t\]</div>
 <p>Putting <span class="arithmatex">\(X_t=W_t\)</span> we get:</p>
 <div class="arithmatex">\[d(W_t^2) = dt + 2W_t dW_t\]</div>
@@ -783,14 +783,14 @@ By adding the correction term, coming from the second order Taylor expansion, we
 <div class="arithmatex">\[\frac{X_t}{1-t} - 0 = \int_0^t \frac{1}{1-s} dW_s\]</div>
 <p>Multiply the <span class="arithmatex">\((1-t)\)</span> to the other side to get our explicit analytical solution:</p>
 <div class="arithmatex">\[X_t = (1-t) \int_0^t \frac{1}{1-s} dW_s\]</div>
-<p>Look at the structure of the solution: <span class="arithmatex">\(X_t = (1-t) \int_0^t \frac{1}{1-s} dW_s\)</span>. As <span class="arithmatex">\(t \to 1\)</span> there is a battle going on: the <span class="arithmatex">\((1-t)\)</span> outside goes to zero, but the <span class="arithmatex">\(\frac{1}{1-s}\)</span> inside the integral blows up. Who wins? Let’s look at the variance. The variance of an integral against <span class="arithmatex">\(dW_s\)</span> is the integral of the squared integrand, so the integral part has variance <span class="arithmatex">\(\int_0^t \frac{1}{(1-s)^2}ds = \frac{t}{1-t}\)</span>, which does blow up. But the <span class="arithmatex">\((1-t)\)</span> outside gets squared when we take the variance of <span class="arithmatex">\(X_t\)</span>:</p>
+<p>Look at the structure of the solution. As <span class="arithmatex">\(t \to 1\)</span> there is a battle going on: the <span class="arithmatex">\((1-t)\)</span> outside goes to zero, but the <span class="arithmatex">\(\frac{1}{1-s}\)</span> inside the integral blows up. Who wins? Let’s look at the variance. The variance of an integral against <span class="arithmatex">\(dW_s\)</span> is the integral of the squared integrand, so the integral part has variance <span class="arithmatex">\(\int_0^t \frac{1}{(1-s)^2}ds = \frac{t}{1-t}\)</span>, which does blow up. But the <span class="arithmatex">\((1-t)\)</span> outside gets squared when we take the variance of <span class="arithmatex">\(X_t\)</span>:</p>
 <div class="arithmatex">\[\text{Var}(X_t) = (1-t)^2 \cdot \frac{t}{1-t} = t(1-t)\]</div>
 <p>This goes to <span class="arithmatex">\(0\)</span> as <span class="arithmatex">\(t \to 1\)</span>, so the <span class="arithmatex">\((1-t)\)</span> wins and the path is pinned to zero at <span class="arithmatex">\(t=1\)</span>.</p>
 <!-- PICTURE 3: Brownian Bridge -->
 <div style="background: #282828; padding: 25px; border-radius: 8px; border: 1px solid #3c3836; margin: 2rem 0;">
   <div style="margin-bottom: 15px; font-family: 'Iosevka', monospace; color: #ebdbb2;">
     <span style="font-weight: 500; font-size: 1.1em;">The Brownian Bridge</span><br>
-    <span style="font-size: 0.9em; color: #a89984;">50 paths forced to arrive exactly at zero at t=1.</span>
+    <span style="font-size: 0.9em; color: #a89984;">50 paths forced to arrive exactly at zero at <span class="arithmatex">\(t = 1\)</span>.</span>
   </div>
   <div style="width: 100%; height: 300px;">
     <canvas id="bridgeCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
